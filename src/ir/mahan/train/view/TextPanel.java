@@ -2,6 +2,7 @@ package ir.mahan.train.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -21,10 +22,10 @@ public class TextPanel extends JPanel {
 		textArea = new JTextArea();
 		setLayout(new BorderLayout());
 		Dimension dim = getPreferredSize();
-		dim.width = 400;
+		dim.width = 384;
 		setPreferredSize(dim);
-		setBorder(BorderFactory.createTitledBorder("Text Area"));
 		add(new JScrollPane(textArea), BorderLayout.CENTER);
+		textArea.setFont(new Font(Font.SERIF,Font.PLAIN,15));
 	}
 
 	public void setText(String str) {

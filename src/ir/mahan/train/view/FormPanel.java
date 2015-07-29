@@ -1,9 +1,9 @@
 package ir.mahan.train.view;
 
-import ir.mahan.train.model.GenderEnum;
+import ir.mahan.train.model.Gender;
 import ir.mahan.train.model.User;
 import ir.mahan.train.model.UserFavouriteSportEnum;
-import ir.mahan.train.model.UserRoleEnum;
+import ir.mahan.train.model.EmpCategory;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -67,9 +67,9 @@ public class FormPanel extends JPanel {
 		lastNameLbl = new JLabel("Family :");
 		agePanel = new AgePanel();
 		ageLbl = new JLabel("Age :");
-		roleCB = new JComboBox(UserRoleEnum.values());
+		roleCB = new JComboBox(EmpCategory.values());
 		roleLbl = new JLabel("Role :");
-		genderCB = new JComboBox(GenderEnum.values());
+		genderCB = new JComboBox(Gender.values());
 		genderLbl = new JLabel("Gender :");
 		userCity = new UserCityPanel();
 		userFavouriteSportList = new JList(UserFavouriteSportEnum.values());

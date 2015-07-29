@@ -1,6 +1,6 @@
 package ir.mahan.train.model;
 
-public enum GenderEnum {
+public enum Gender {
 	FEMALE,
 	MALE;
 }

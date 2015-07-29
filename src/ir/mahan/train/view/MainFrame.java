@@ -3,17 +3,20 @@ package ir.mahan.train.view;
 import ir.mahan.train.model.User;
 
 import java.awt.BorderLayout;
-import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 
 public class MainFrame extends JFrame {
 
 	public MenuPanel btnPanel;
 	public TextPanel textPanel;
 	public FormPanel formPanel;
-
+	private JTabbedPane tabbedpane;
+	private JSplitPane splitPane;
+	
+	
 	public MainFrame(String title) {
 		super(title);
 		this.setView();
@@ -39,9 +42,12 @@ public class MainFrame extends JFrame {
 			
 		});
 		
+		tabbedpane = new JTabbedPane();
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,formPanel,tabbedpane);
+		tabbedpane.add("Text Area", textPanel);
+		splitPane.setOneTouchExpandable(true);
 		this.add(btnPanel, BorderLayout.NORTH);
-		this.add(textPanel, BorderLayout.EAST);
-		this.add(formPanel, BorderLayout.WEST);
+		this.add(splitPane, BorderLayout.EAST);
 	}
 
 	private void setView() {

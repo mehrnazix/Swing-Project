@@ -1,6 +1,6 @@
 package ir.mahan.train.model;
 
-public enum UserRoleEnum {
+public enum EmpCategory {
 	STUDENT,
 	TEACHER,
 	STAFF
