@@ -13,19 +13,19 @@ public class Controller {
 	}
 
 
-public void addPerson(User ev){
-	
-	Person person = convertFromEventToPerson(ev);
-	db.addPerson(person);
-}
+//public void addPerson(User ev){
+//	
+//	Person person = convertFromEventToPerson(ev);
+//	db.addPerson(person);
+//}
 
 
-private Person convertFromEventToPerson(User ev) {
-	String name = ev.FirstName;
-	String occuptaion = ev.Role;
-	String ageCat = ev.Age;
-	String empCat = ev.Role;
-	
+//private Person convertFromEventToPerson(User ev) {
+//	String name = ev.FirstName;
+//	String occuptaion = ev.Role;
+//	String ageCat = ev.Age;
+//	String empCat = ev.Role;
+//	
 //	switch (ageCat) {
 ////	case 0:
 ////		AgeCategory = AgeCategory.child
@@ -36,4 +36,4 @@ private Person convertFromEventToPerson(User ev) {
 //		break;
 //	}
 	}
-}
+//}
