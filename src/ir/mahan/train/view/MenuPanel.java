@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBoxMenuItem;
@@ -41,7 +42,9 @@ public class MenuPanel extends JPanel {
 		exportMenuItem = new JMenuItem("Export data...");
 		importMenuItem = new JMenuItem("Import data...");
 		exitMenuItem = new JMenuItem("Exit");
-		exitMenuItem.addActionListener(new MenuItemActionListener());
+		MenuItemActionListener menuItemActionListener = new MenuItemActionListener();
+		exitMenuItem.addActionListener(menuItemActionListener);
+		exportMenuItem.addActionListener(menuItemActionListener);
 		fileMenu.add(exportMenuItem);
 		fileMenu.add(importMenuItem);
 		fileMenu.addSeparator();
@@ -61,10 +64,13 @@ public class MenuPanel extends JPanel {
 		filechooser = new JFileChooser();
 		
 		
+		
 		fileMenuBar.add(windowBar);
 		windowBar.add(showMenu);
+		
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 		exitMenuItem.setMnemonic(KeyEvent.VK_X);
+		
 		prefsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P , ActionEvent.CTRL_MASK));
 		exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X , ActionEvent.CTRL_MASK));
 		importMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I , ActionEvent.CTRL_MASK));
@@ -79,7 +85,12 @@ public class MenuPanel extends JPanel {
 				System.exit(0);
 			}
 			else if (menuItem == exportMenuItem) {
-//				
+				
+				int returnValue = filechooser.showOpenDialog(null);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					filechooser.setFileFilter(new PersonFileFilter());
+					File select = filechooser.getSelectedFile();
+				}
 			}
 			}
 		}
