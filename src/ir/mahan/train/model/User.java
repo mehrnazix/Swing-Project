@@ -3,6 +3,12 @@ package ir.mahan.train.model;
 import javax.swing.JOptionPane;
 
 public class User {
+	public User() {
+		super();
+		this.id = ++count;
+	}
+
+	public  int 		id;
 	public  String			FirstName;
 	public  String			LastName;
 	public  String			Role;
@@ -18,6 +24,9 @@ public class User {
 		
 		return FirstName + Seperator + LastName + Seperator + Role + Seperator + Age + Seperator + Gender + Seperator + City + Seperator + favouriteSport + Seperator + salary; 
 	}
+	
+	private static int count = 0;
+	
 	
 	public boolean IsValid(boolean showMessage)
 	{

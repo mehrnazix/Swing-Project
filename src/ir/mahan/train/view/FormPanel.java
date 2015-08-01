@@ -241,8 +241,11 @@ public class FormPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			JButton btn = (JButton) event.getSource();
-
+			
+			
 			if (btn == submitBtn) {
+				
+				
 				if (istringListener != null) {
 					User user = new User();
 					user.FirstName = firstNameTxt.getText();
@@ -253,6 +256,7 @@ public class FormPanel extends JPanel {
 					user.City = userCity.getSelectedButtonText();
 					user.favouriteSport = userFavouriteSportList.getSelectedValue().toString();
 					user.isEmployee = isEmployeeChB.isSelected();
+					
 					try {
 						user.salary = Integer.parseInt(salaryTxt.getText());
 						salaryTxt.setText("");
@@ -265,7 +269,8 @@ public class FormPanel extends JPanel {
 //						System.out.println("hello");
 //					}
 //					
-
+					
+					
 					istringListener.stringEmitted(user);
 				}
 			}
