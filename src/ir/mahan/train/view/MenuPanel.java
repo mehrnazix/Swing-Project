@@ -14,6 +14,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MenuPanel extends JPanel {
 
@@ -22,7 +23,9 @@ public class MenuPanel extends JPanel {
 	private JMenuItem exportMenuItem, importMenuItem, exitMenuItem, prefsItem, showFormItem;
 	private JCheckBoxMenuItem showFormCheckBoxItem;
 	private IuserListener iuserListener;
-
+	private JFileChooser filechooser;
+	private FileNameExtensionFilter filenameFilter;
+	
 	public void setIstringListener(IuserListener iuserListener) {
 		this.iuserListener = iuserListener;
 	}
@@ -54,6 +57,10 @@ public class MenuPanel extends JPanel {
 		showMenu.add(showFormItem);
 		showFormCheckBoxItem.setSelected(true);
 		windowBar = new JMenu("Window");
+		
+		filechooser = new JFileChooser();
+		
+		
 		fileMenuBar.add(windowBar);
 		windowBar.add(showMenu);
 		fileMenu.setMnemonic(KeyEvent.VK_F);
@@ -71,8 +78,8 @@ public class MenuPanel extends JPanel {
 			if (menuItem == exitMenuItem) {
 				System.exit(0);
 			}
-			else if (menuItem == importMenuItem) {
-//				exportToFile();
+			else if (menuItem == exportMenuItem) {
+//				
 			}
 			}
 		}
