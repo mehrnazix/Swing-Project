@@ -10,7 +10,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
-import sun.org.mozilla.javascript.internal.regexp.SubString;
 
 public class UserCityPanel extends JPanel {
 	

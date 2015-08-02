@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,17 +138,18 @@ public class MainFrame extends JFrame {
 			if (menuItem == exitMenuItem) {
 				System.exit(0);
 			} else if (menuItem == exportMenuItem) {
-				// FileManager fileManager = new FileManager();
-				// try {
-				// fileManager.exportToFile(dbForm);
-				// } catch (IOException e) {
-				// e.printStackTrace();
-				// }
-				if (fileChooser.showSaveDialog() == JFileChooser.APPROVE_OPTION) {
-
-				}
-				DataBase db = new DataBase();
-				db.saveToFile(dbForm);
+				 FileManager fileManager = new FileManager();
+				 try {
+				 fileManager.exportToFile(dbForm);
+				 } catch (IOException e) {
+				 e.printStackTrace();
+				 }
+//				if (filechooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+//					File getSelectedFile = filechooser.getSelectedFile();
+//					
+//				}
+//				DataBase db = new DataBase();
+//				db.saveToFile(dbForm);
 			} else if (menuItem == importMenuItem) {
 				FileManager fileManager = new FileManager();
 				try {
