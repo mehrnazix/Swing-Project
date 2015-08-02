@@ -20,7 +20,6 @@ public class FileManager {
 		this.fileChooser = new JFileChooser();
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		personFileFilter = new PersonFileFilter();
-//		fileChooser.setFileFilter(personFileFilter);
 		fileChooser.addChoosableFileFilter(personFileFilter);
 		
 
@@ -48,9 +47,9 @@ public class FileManager {
 			if (result == JFileChooser.APPROVE_OPTION) {
 				File selectedFile = fileChooser.getSelectedFile();
 				FileInputStream fileStream = new FileInputStream(selectedFile);
-				ObjectInputStream i = new ObjectInputStream(fileStream);
-				List<T> e = (List<T>) i.readObject();
-				i.close();
+				ObjectInputStream input = new ObjectInputStream(fileStream);
+				List<T> e = (List<T>) input.readObject();
+				input.close();
 				return e;
 			}
 

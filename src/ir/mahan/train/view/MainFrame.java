@@ -33,11 +33,11 @@ public class MainFrame extends JFrame {
 	private List<User> dbForm;
 	private JMenuBar fileMenuBar;
 	private JMenu fileMenu, windowBar, showMenu;
-	private JMenuItem exportMenuItem, importMenuItem, exitMenuItem, prefsItem, showFormItem;
+	private JMenuItem exportMenuItem, importMenuItem, exitMenuItem, prefsItem,
+			showFormItem;
 	private JCheckBoxMenuItem showFormCheckBoxItem;
 	private JFileChooser filechooser;
-	
-	
+
 	public MainFrame(String title) {
 		super(title);
 		addMenuBar();
@@ -45,8 +45,6 @@ public class MainFrame extends JFrame {
 		addComponent();
 	}
 
-	
-	
 	private void addMenuBar() {
 		fileMenuBar = new JMenuBar();
 		fileMenu = new JMenu("File");
@@ -71,25 +69,26 @@ public class MainFrame extends JFrame {
 		showMenu.add(showFormItem);
 		showFormCheckBoxItem.setSelected(true);
 		windowBar = new JMenu("Window");
-		
-//		filechooser = new JFileChooser();
-//		filechooser.setFileFilter(new PersonFileFilter());
-		
-		
+
+		// filechooser = new JFileChooser();
+		// filechooser.setFileFilter(new PersonFileFilter());
+
 		fileMenuBar.add(windowBar);
 		windowBar.add(showMenu);
-		
+
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 		exitMenuItem.setMnemonic(KeyEvent.VK_X);
-		
-		prefsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P , ActionEvent.CTRL_MASK));
-		exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X , ActionEvent.CTRL_MASK));
-		importMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I , ActionEvent.CTRL_MASK));
-		exportMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S , ActionEvent.CTRL_MASK));
-		
+
+		prefsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
+				ActionEvent.CTRL_MASK));
+		exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
+				ActionEvent.CTRL_MASK));
+		importMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
+				ActionEvent.CTRL_MASK));
+		exportMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+				ActionEvent.CTRL_MASK));
+
 	}
-
-
 
 	private void addComponent() {
 		textPanel = new TextPanel();
@@ -98,20 +97,19 @@ public class MainFrame extends JFrame {
 		tablePanel.setData(dbForm);
 		formPanel = new FormPanel();
 		formPanel.setIstringListener(new IuserListener<User>() {
-		public void stringEmitted(User user) {
+			public void stringEmitted(User user) {
 				if (user.IsValid(true)) {
 					textPanel.setText(user.ToString("::"));
 					dbForm.add(user);
 					tablePanel.refresh();
 				}
 			}
-			
+
 		});
-		
-	
-		
+
 		tabbedpane = new JTabbedPane();
-		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,formPanel,tabbedpane);
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel,
+				tabbedpane);
 		tabbedpane.add("Text Area", textPanel);
 		tabbedpane.add("Person DB", tablePanel);
 		splitPane.setOneTouchExpandable(true);
@@ -125,35 +123,35 @@ public class MainFrame extends JFrame {
 		this.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	
+
 	private class MenuItemActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			JMenuItem menuItem = (JMenuItem) event.getSource();
 			if (menuItem == exitMenuItem) {
 				System.exit(0);
-			}
-			else if (menuItem == exportMenuItem) {
+			} else if (menuItem == exportMenuItem) {
 				FileManager fileManager = new FileManager();
 				try {
 					fileManager.exportToFile(dbForm);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}
-			else if (menuItem == importMenuItem) {
+			} else if (menuItem == importMenuItem) {
 				FileManager fileManager = new FileManager();
 				try {
 					List<User> userList = fileManager.importFromFile();
-					for (User u : userList) {
-						textPanel.setText(u.ToString("/"));
-						dbForm.add(u);
+					if (userList != null) {
+						for (User u : userList) {
+							textPanel.setText(u.ToString("/"));
+							dbForm.add(u);
+						}
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}			
-			
 			}
+
 		}
+	}
 }
