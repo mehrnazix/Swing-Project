@@ -1,6 +1,6 @@
 package ir.mahan.train.view;
 
-import ir.mahan.train.model.User;
+import ir.mahan.train.model.DataBase;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -45,18 +45,18 @@ public class MainFrame extends JFrame {
 
 	private void addMenuBar() {
 		fileMenuBar = new JMenuBar();
-		
+
 		fileMenu = new JMenu("File");
-		
+
 		exportMenuItem = new JMenuItem("Export data...");
 		importMenuItem = new JMenuItem("Import data...");
 		exitMenuItem = new JMenuItem("Exit");
-		
+
 		MenuItemActionListener menuItemActionListener = new MenuItemActionListener();
 		exitMenuItem.addActionListener(menuItemActionListener);
 		exportMenuItem.addActionListener(menuItemActionListener);
 		importMenuItem.addActionListener(menuItemActionListener);
-		
+
 		fileMenu.add(exportMenuItem);
 		fileMenu.add(importMenuItem);
 		fileMenu.addSeparator();
@@ -70,9 +70,8 @@ public class MainFrame extends JFrame {
 		showMenu.add(prefsItem);
 		showMenu.add(showFormItem);
 		showFormCheckBoxItem.setSelected(true);
-		
-		windowBar = new JMenu("Window");
 
+		windowBar = new JMenu("Window");
 
 		fileMenuBar.add(windowBar);
 		windowBar.add(showMenu);
@@ -97,15 +96,18 @@ public class MainFrame extends JFrame {
 		dbForm = new ArrayList<User>();
 		tablePanel.setData(dbForm);
 		formPanel = new FormPanel();
-		formPanel.setIstringListener(new IuserListener<User>() {
-			public void stringEmitted(User user) {
+
+		formPanel.setIstringListener(new IformEvent<User>() {
+			public void formEventEmitted(User user) {
 				if (Validation.userValidation(user)) {
 					textPanel.setText(user.ToString("::"));
 					dbForm.add(user);
 					tablePanel.refresh();
 				} else {
 					JOptionPane optionPane = new JOptionPane();
-					optionPane.showMessageDialog(null, "Firstname or Lastname can not be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+					optionPane.showMessageDialog(null,
+							"Firstname or Lastname can not be empty!", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 
@@ -135,12 +137,17 @@ public class MainFrame extends JFrame {
 			if (menuItem == exitMenuItem) {
 				System.exit(0);
 			} else if (menuItem == exportMenuItem) {
-				FileManager fileManager = new FileManager();
-				try {
-					fileManager.exportToFile(dbForm);
-				} catch (IOException e) {
-					e.printStackTrace();
+				// FileManager fileManager = new FileManager();
+				// try {
+				// fileManager.exportToFile(dbForm);
+				// } catch (IOException e) {
+				// e.printStackTrace();
+				// }
+				if (fileChooser.showSaveDialog() == JFileChooser.APPROVE_OPTION) {
+
 				}
+				DataBase db = new DataBase();
+				db.saveToFile(dbForm);
 			} else if (menuItem == importMenuItem) {
 				FileManager fileManager = new FileManager();
 				try {

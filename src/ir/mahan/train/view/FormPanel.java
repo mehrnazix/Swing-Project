@@ -1,7 +1,6 @@
 package ir.mahan.train.view;
 
 import ir.mahan.train.model.Gender;
-import ir.mahan.train.model.User;
 import ir.mahan.train.model.UserFavouriteSportEnum;
 import ir.mahan.train.model.EmpCategory;
 
@@ -40,7 +39,7 @@ public class FormPanel extends JPanel {
 	private JLabel genderLbl;
 	private JLabel cityLbl;
 	private JButton submitBtn;
-	private IuserListener istringListener;
+	private IformEvent istringListener;
 	private UserCityPanel userCity;
 	private JList userFavouriteSportList;
 	private JLabel userFavouriteSportLbl;
@@ -48,7 +47,7 @@ public class FormPanel extends JPanel {
 	private JLabel salaryLbl;
 	private JTextField salaryTxt;
 
-	public void setIstringListener(IuserListener istringListener) {
+	public void setIstringListener(IformEvent istringListener) {
 		this.istringListener = istringListener;
 	}
 
@@ -248,12 +247,12 @@ public class FormPanel extends JPanel {
 				
 				if (istringListener != null) {
 					User user = new User();
-					user.FirstName = firstNameTxt.getText();
-					user.LastName = lastNameTxt.getText();
-					user.Age = agePanel.getSelectedButtonText();
-					user.Gender = genderCB.getSelectedItem().toString();
-					user.Role = roleCB.getSelectedItem().toString();
-					user.City = userCity.getSelectedButtonText();
+					user.firstName = firstNameTxt.getText();
+					user.lastName = lastNameTxt.getText();
+					user.age = agePanel.getSelectedButtonText();
+					user.gender = genderCB.getSelectedItem().toString();
+					user.role = roleCB.getSelectedItem().toString();
+					user.city = userCity.getSelectedButtonText();
 					user.favouriteSport = userFavouriteSportList.getSelectedValue().toString();
 					user.isEmployee = isEmployeeChB.isSelected();
 					
@@ -271,7 +270,7 @@ public class FormPanel extends JPanel {
 //					
 					
 					
-					istringListener.stringEmitted(user);
+					istringListener.formEventEmitted(user);
 				}
 			}
 		}

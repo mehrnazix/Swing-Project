@@ -1,7 +1,5 @@
 package ir.mahan.train.view;
 
-import ir.mahan.train.model.User;
-
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -37,17 +35,17 @@ public class PersonTableModel extends AbstractTableModel {
 		case 0:
 			return user.id;
 		case 1:
-			return user.FirstName;
+			return user.firstName;
 		case 2: 
-			return user.LastName;
+			return user.lastName;
 		case 3:
-			return user.Role;
+			return user.role;
 		case 4: 
-			return user.Age;
+			return user.age;
 		case 5:
-			return user.Gender;
+			return user.gender;
 		case 6:
-			return user.City;
+			return user.city;
 		}
 		return null;
 	}

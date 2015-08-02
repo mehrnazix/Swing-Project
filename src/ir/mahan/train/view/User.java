@@ -1,4 +1,4 @@
-package ir.mahan.train.model;
+package ir.mahan.train.view;
 
 import java.io.Serializable;
 
@@ -12,12 +12,12 @@ public class User implements Serializable {
 	}
 
 	public int id;
-	public String FirstName;
-	public String LastName;
-	public String Role;
-	public String Age;
-	public String Gender;
-	public String City;
+	public String firstName;
+	public String lastName;
+	public String role;
+	public String age;
+	public String gender;
+	public String city;
 	public String favouriteSport;
 	public boolean isEmployee;
 	public int salary;
@@ -25,8 +25,8 @@ public class User implements Serializable {
 
 	public String ToString(String Seperator) {
 
-		return FirstName + Seperator + LastName + Seperator + Role + Seperator
-				+ Age + Seperator + Gender + Seperator + City + Seperator
+		return firstName + Seperator + lastName + Seperator + role + Seperator
+				+ age + Seperator + gender + Seperator + city + Seperator
 				+ favouriteSport + Seperator + salary;
 	}
 	

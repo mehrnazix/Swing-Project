@@ -1,7 +1,5 @@
 package ir.mahan.train.view;
 
-import ir.mahan.train.model.User;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.List;
