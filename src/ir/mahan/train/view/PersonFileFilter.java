@@ -6,17 +6,19 @@ public class PersonFileFilter extends FileFilter{
 
 	@Override
 	public boolean accept(File file) {
-		if (file.isDirectory()) {
-			return false;
-		}
 		String name = file.getName();
 		String extension = Utils.getFileExtention(name);
+		
+	    
+		if (file.isDirectory()) {
+			return true;
+		}
 		
 		if (extension == null) {
 			return false;
 		}
 		
-		if (extension.equalsIgnoreCase("Per"))
+		if (extension.equals("per"))
 		{
 			return true;
 		}
@@ -26,8 +28,7 @@ public class PersonFileFilter extends FileFilter{
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Person Files";
 	}
 	
 }

@@ -1,14 +1,21 @@
 package ir.mahan.train.model;
 
+import java.io.Serializable;
+
 import javax.swing.JOptionPane;
 
-public class User {
+public class User  implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public User() {
 		super();
 		this.id = ++count;
 	}
 
-	public  int 		id;
+	public  int 			id;
 	public  String			FirstName;
 	public  String			LastName;
 	public  String			Role;
