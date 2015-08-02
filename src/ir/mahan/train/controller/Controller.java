@@ -11,29 +11,4 @@ public class Controller {
 	public Controller(DataBase db) {
 		this.db = new DataBase();
 	}
-
-
-//public void addPerson(User ev){
-//	
-//	Person person = convertFromEventToPerson(ev);
-//	db.addPerson(person);
-//}
-
-
-//private Person convertFromEventToPerson(User ev) {
-//	String name = ev.FirstName;
-//	String occuptaion = ev.Role;
-//	String ageCat = ev.Age;
-//	String empCat = ev.Role;
-//	
-//	switch (ageCat) {
-////	case 0:
-////		AgeCategory = AgeCategory.child
-////		
-//		break;
-//
-//	default:
-//		break;
-//	}
-	}
-//}
+}

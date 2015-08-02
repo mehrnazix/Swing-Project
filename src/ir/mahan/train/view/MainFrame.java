@@ -1,14 +1,11 @@
 package ir.mahan.train.view;
 
-import ir.mahan.train.model.Person;
 import ir.mahan.train.model.User;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
@@ -47,14 +45,18 @@ public class MainFrame extends JFrame {
 
 	private void addMenuBar() {
 		fileMenuBar = new JMenuBar();
+		
 		fileMenu = new JMenu("File");
+		
 		exportMenuItem = new JMenuItem("Export data...");
 		importMenuItem = new JMenuItem("Import data...");
 		exitMenuItem = new JMenuItem("Exit");
+		
 		MenuItemActionListener menuItemActionListener = new MenuItemActionListener();
 		exitMenuItem.addActionListener(menuItemActionListener);
 		exportMenuItem.addActionListener(menuItemActionListener);
 		importMenuItem.addActionListener(menuItemActionListener);
+		
 		fileMenu.add(exportMenuItem);
 		fileMenu.add(importMenuItem);
 		fileMenu.addSeparator();
@@ -68,10 +70,9 @@ public class MainFrame extends JFrame {
 		showMenu.add(prefsItem);
 		showMenu.add(showFormItem);
 		showFormCheckBoxItem.setSelected(true);
+		
 		windowBar = new JMenu("Window");
 
-		// filechooser = new JFileChooser();
-		// filechooser.setFileFilter(new PersonFileFilter());
 
 		fileMenuBar.add(windowBar);
 		windowBar.add(showMenu);
@@ -98,10 +99,13 @@ public class MainFrame extends JFrame {
 		formPanel = new FormPanel();
 		formPanel.setIstringListener(new IuserListener<User>() {
 			public void stringEmitted(User user) {
-				if (user.IsValid(true)) {
+				if (Validation.userValidation(user)) {
 					textPanel.setText(user.ToString("::"));
 					dbForm.add(user);
 					tablePanel.refresh();
+				} else {
+					JOptionPane optionPane = new JOptionPane();
+					optionPane.showMessageDialog(null, "Firstname or Lastname can not be empty!", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 
@@ -146,6 +150,7 @@ public class MainFrame extends JFrame {
 							textPanel.setText(u.ToString("/"));
 							dbForm.add(u);
 						}
+						tablePanel.refresh();
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
