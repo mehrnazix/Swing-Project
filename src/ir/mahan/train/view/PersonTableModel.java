@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class PersonTableModel extends AbstractTableModel {
 
-	private List<User> db;
+	private List<FormEvent> db;
 	private String[] colname = {"Id","FirstName", "LastName", "Role", "Age", "Gender", "City"};
 	
 	@Override
@@ -14,7 +14,7 @@ public class PersonTableModel extends AbstractTableModel {
 		return colname[column];
 	}
 	
-	public void setData (List<User> db) {
+	public void setData (List<FormEvent> db) {
 		this.db = db;
 	}
 	
@@ -30,22 +30,22 @@ public class PersonTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int row, int col) {
-		User user = db.get(row);
+		FormEvent formEvent = db.get(row);
 		switch (col) {
 		case 0:
-			return user.id;
+			return formEvent.id;
 		case 1:
-			return user.firstName;
+			return formEvent.firstName;
 		case 2: 
-			return user.lastName;
+			return formEvent.lastName;
 		case 3:
-			return user.role;
+			return formEvent.role;
 		case 4: 
-			return user.age;
+			return formEvent.age;
 		case 5:
-			return user.gender;
+			return formEvent.gender;
 		case 6:
-			return user.city;
+			return formEvent.city;
 		}
 		return null;
 	}

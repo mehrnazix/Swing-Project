@@ -4,7 +4,7 @@ import ir.mahan.train.model.AgeCategory;
 import ir.mahan.train.model.DataBase;
 import ir.mahan.train.model.Person;
 import ir.mahan.train.view.IformEvent;
-import ir.mahan.train.view.User;
+import ir.mahan.train.view.FormEvent;
 
 public class Controller {
 	DataBase db;
@@ -13,7 +13,7 @@ public class Controller {
 		this.db = new DataBase();
 	}
 
-	public void addPerson(User user) {
+	public void addPerson(FormEvent formEvent) {
 		
 	}
 	

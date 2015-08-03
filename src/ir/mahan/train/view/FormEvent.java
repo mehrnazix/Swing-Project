@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 import javax.swing.JOptionPane;
 
-public class User implements Serializable {
+public class FormEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
-	public User() {
+	public FormEvent() {
 		super();
 		this.id = ++count;
 	}

@@ -31,7 +31,7 @@ public class TablePanel extends JPanel {
 			
 	}
 	
-	public void setData (List<User> db) {
+	public void setData (List<FormEvent> db) {
 		personTableModel.setData(db);
 	}
 	

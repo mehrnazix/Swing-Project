@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
 	private JTabbedPane tabbedpane;
 	private JSplitPane splitPane;
 	private TablePanel tablePanel;
-	private List<User> dbForm;
+	private List<FormEvent> dbForm;
 	private JMenuBar fileMenuBar;
 	private JMenu fileMenu, windowBar, showMenu;
 	private JMenuItem exportMenuItem, importMenuItem, exitMenuItem, prefsItem,
@@ -94,15 +94,15 @@ public class MainFrame extends JFrame {
 	private void addComponent() {
 		textPanel = new TextPanel();
 		tablePanel = new TablePanel();
-		dbForm = new ArrayList<User>();
+		dbForm = new ArrayList<FormEvent>();
 		tablePanel.setData(dbForm);
 		formPanel = new FormPanel();
 
-		formPanel.setIstringListener(new IformEvent<User>() {
-			public void formEventEmitted(User user) {
-				if (Validation.userValidation(user)) {
-					textPanel.setText(user.ToString("::"));
-					dbForm.add(user);
+		formPanel.setIstringListener(new IformEvent<FormEvent>() {
+			public void formEventEmitted(FormEvent formEvent) {
+				if (Validation.userValidation(formEvent)) {
+					textPanel.setText(formEvent.ToString("::"));
+					dbForm.add(formEvent);
 					tablePanel.refresh();
 				} else {
 					JOptionPane optionPane = new JOptionPane();
@@ -153,9 +153,9 @@ public class MainFrame extends JFrame {
 			} else if (menuItem == importMenuItem) {
 				FileManager fileManager = new FileManager();
 				try {
-					List<User> userList = fileManager.importFromFile();
+					List<FormEvent> userList = fileManager.importFromFile();
 					if (userList != null) {
-						for (User u : userList) {
+						for (FormEvent u : userList) {
 							textPanel.setText(u.ToString("/"));
 							dbForm.add(u);
 						}

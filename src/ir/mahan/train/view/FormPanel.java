@@ -246,18 +246,18 @@ public class FormPanel extends JPanel {
 				
 				
 				if (istringListener != null) {
-					User user = new User();
-					user.firstName = firstNameTxt.getText();
-					user.lastName = lastNameTxt.getText();
-					user.age = agePanel.getSelectedButtonText();
-					user.gender = genderCB.getSelectedItem().toString();
-					user.role = roleCB.getSelectedItem().toString();
-					user.city = userCity.getSelectedButtonText();
-					user.favouriteSport = userFavouriteSportList.getSelectedValue().toString();
-					user.isEmployee = isEmployeeChB.isSelected();
+					FormEvent formEvent = new FormEvent();
+					formEvent.firstName = firstNameTxt.getText();
+					formEvent.lastName = lastNameTxt.getText();
+					formEvent.age = agePanel.getSelectedButtonText();
+					formEvent.gender = genderCB.getSelectedItem().toString();
+					formEvent.role = roleCB.getSelectedItem().toString();
+					formEvent.city = userCity.getSelectedButtonText();
+					formEvent.favouriteSport = userFavouriteSportList.getSelectedValue().toString();
+					formEvent.isEmployee = isEmployeeChB.isSelected();
 					
 					try {
-						user.salary = Integer.parseInt(salaryTxt.getText());
+						formEvent.salary = Integer.parseInt(salaryTxt.getText());
 						salaryTxt.setText("");
 					} catch (Exception e) {
 						
@@ -270,7 +270,7 @@ public class FormPanel extends JPanel {
 //					
 					
 					
-					istringListener.formEventEmitted(user);
+					istringListener.formEventEmitted(formEvent);
 				}
 			}
 		}
