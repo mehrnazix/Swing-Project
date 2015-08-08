@@ -14,18 +14,45 @@ public class Controller {
 	}
 
 	public void addPerson(FormEvent formEvent) {
-		
+
 	}
-	
-	public void saveToDb (FormEvent formEvent) {
-		
+
+	public void saveToDb(FormEvent formEvent) {
+
 	}
-	
-	public void loadFromDb (FormEvent formEvent) {
-		
+
+	public void loadFromDb(FormEvent formEvent) {
+
 	}
+
+	public void addPerson(FormEvent formEvent) {
+
+		Person person = convertFromEventToPerson(formEvent);
+		db.addPerson(person);
+	}
+
+	private Person convertFromEventToPerson(User ev) {
+	String name = ev.FirstName;
+	String occuptaion = ev.Role;
+	String ageCat = ev.Age;
+	String empCat = ev.Role;
 	
-	public void connect () {
+	switch (ageCat) {
+	case 0:
+		AgeCategory = AgeCategory.child
 		
+		break;
+
+	default:
+		break;
+	}
+
+	public void connect() {
+		try {
+			db.connect();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

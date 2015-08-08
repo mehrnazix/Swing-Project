@@ -41,7 +41,6 @@ public class FormEvent implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	public FormEvent() {
-		super();
 		this.id = ++count;
 	}
 
