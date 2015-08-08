@@ -3,26 +3,21 @@ package ir.mahan.train.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectOutputStream;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+import java.util.List;
 
 import ir.mahan.train.model.AgeCategory;
 import ir.mahan.train.model.DataBase;
 import ir.mahan.train.model.Person;
-import ir.mahan.train.view.IformEvent;
 import ir.mahan.train.view.FormEvent;
 
 public class Controller {
 	DataBase db;
-	private java.util.List<Person> people;
+	private List<Person> people;
 
 	public Controller(DataBase db) {
 		this.db = new DataBase();
 	}
-
-
 
 	public void saveToDb(FormEvent formEvent) {
 

@@ -140,7 +140,7 @@ public class MainFrame extends JFrame {
 		splitPane.setOneTouchExpandable(true);
 		this.add(splitPane, BorderLayout.EAST);
 		this.add(fileMenuBar, BorderLayout.NORTH);
-		this.add(toolbarPanel,BorderLayout.NORTH);
+		this.add(toolbarPanel, BorderLayout.SOUTH);
 	}
 
 	private void setView() {
@@ -158,17 +158,18 @@ public class MainFrame extends JFrame {
 				System.exit(0);
 			} else if (menuItem == exportMenuItem) {
 				 FileManager fileManager = new FileManager();
-				 try {
-				 fileManager.exportToFile(dbForm);
-				 } catch (IOException e) {
-				 e.printStackTrace();
-				 }
-//				if (filechooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
-//					File getSelectedFile = filechooser.getSelectedFile();
-//					
-//				}
-//				DataBase db = new DataBase();
-//				db.saveToFile(dbForm);
+//
+//				 try {
+//				 fileManager.exportToFile(dbForm);
+//				 } catch (IOException e) {
+//				 e.printStackTrace();
+//				 }
+				if (filechooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					File getSelectedFile = filechooser.getSelectedFile();
+					
+				}
+				DataBase db = new DataBase();
+				db.saveToFile(dbForm);
 			} else if (menuItem == importMenuItem) {
 				FileManager fileManager = new FileManager();
 				try {
