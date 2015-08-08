@@ -1,5 +1,6 @@
 package ir.mahan.train.view;
 
+import ir.mahan.train.model.AgeCategory;
 import ir.mahan.train.model.Gender;
 import ir.mahan.train.model.UserFavouriteSportEnum;
 import ir.mahan.train.model.EmpCategory;

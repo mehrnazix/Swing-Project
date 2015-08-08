@@ -1,10 +1,44 @@
 package ir.mahan.train.view;
 
+import ir.mahan.train.model.AgeCategory;
+
 import java.io.Serializable;
 
 import javax.swing.JOptionPane;
 
 public class FormEvent implements Serializable {
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String value) {
+		this.age = value;
+	}
+
 	private static final long serialVersionUID = 1L;
 	public FormEvent() {
 		super();
@@ -29,6 +63,8 @@ public class FormEvent implements Serializable {
 				+ age + Seperator + gender + Seperator + city + Seperator
 				+ favouriteSport + Seperator + salary;
 	}
+
+
 	
 
 }

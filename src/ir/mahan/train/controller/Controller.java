@@ -17,5 +17,15 @@ public class Controller {
 		
 	}
 	
+	public void saveToDb (FormEvent formEvent) {
+		
+	}
 	
+	public void loadFromDb (FormEvent formEvent) {
+		
+	}
+	
+	public void connect () {
+		
+	}
 }

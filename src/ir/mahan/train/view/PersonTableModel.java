@@ -1,5 +1,7 @@
 package ir.mahan.train.view;
 
+import ir.mahan.train.model.AgeCategory;
+
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -48,6 +50,41 @@ public class PersonTableModel extends AbstractTableModel {
 			return formEvent.city;
 		}
 		return null;
+	}
+	
+	@Override
+	public boolean isCellEditable (int row, int col) {
+		switch (col) {
+		case 1:
+			return true;
+		case 2:
+			return true;
+		case 4:
+			return true;
+		case 5:
+			return true;
+		}
+		return false;
+		
+	}
+	
+	@Override
+	public void setValueAt(Object value, int row, int col){
+		if (db == null) {
+			return;
+		}
+		
+		FormEvent p = (FormEvent)db.get(row);
+		switch (col) {
+		case 1:
+			p.setFirstName((String)value);
+		case 2:
+			p.setLastName((String)value);
+		case 3:
+			p.setAge((String)value);
+		default:
+			return;
+		}
 	}
 
 }

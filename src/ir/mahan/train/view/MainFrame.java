@@ -1,5 +1,6 @@
 package ir.mahan.train.view;
 
+import ir.mahan.train.controller.Controller;
 import ir.mahan.train.model.DataBase;
 
 import java.awt.BorderLayout;
@@ -36,6 +37,9 @@ public class MainFrame extends JFrame {
 			showFormItem;
 	private JCheckBoxMenuItem showFormCheckBoxItem;
 	private JFileChooser filechooser;
+	private ToolBarPanel toolbarPanel;
+	private Controller controller;
+	
 
 	public MainFrame(String title) {
 		super(title);
@@ -46,7 +50,6 @@ public class MainFrame extends JFrame {
 
 	private void addMenuBar() {
 		fileMenuBar = new JMenuBar();
-
 		fileMenu = new JMenu("File");
 
 		exportMenuItem = new JMenuItem("Export data...");
@@ -97,7 +100,8 @@ public class MainFrame extends JFrame {
 		dbForm = new ArrayList<FormEvent>();
 		tablePanel.setData(dbForm);
 		formPanel = new FormPanel();
-
+		toolbarPanel = new ToolBarPanel();
+		
 		formPanel.setIstringListener(new IformEvent<FormEvent>() {
 			public void formEventEmitted(FormEvent formEvent) {
 				if (Validation.userValidation(formEvent)) {
@@ -113,7 +117,21 @@ public class MainFrame extends JFrame {
 			}
 
 		});
-
+		
+		controller = new Controller(null);
+		toolbarPanel.setToolbarListener(new ItoolbarListener() {
+			
+			@Override
+			public void saveEventOccured() {
+				controller.saveToDb(null);
+			}
+			
+			@Override
+			public void refreshEventOccured() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		tabbedpane = new JTabbedPane();
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel,
 				tabbedpane);
@@ -122,6 +140,7 @@ public class MainFrame extends JFrame {
 		splitPane.setOneTouchExpandable(true);
 		this.add(splitPane, BorderLayout.EAST);
 		this.add(fileMenuBar, BorderLayout.NORTH);
+		this.add(toolbarPanel,BorderLayout.NORTH);
 	}
 
 	private void setView() {
