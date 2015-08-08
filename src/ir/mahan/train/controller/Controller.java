@@ -1,5 +1,13 @@
 package ir.mahan.train.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
 import ir.mahan.train.model.AgeCategory;
 import ir.mahan.train.model.DataBase;
 import ir.mahan.train.model.Person;
@@ -8,14 +16,13 @@ import ir.mahan.train.view.FormEvent;
 
 public class Controller {
 	DataBase db;
+	private java.util.List<Person> people;
 
 	public Controller(DataBase db) {
 		this.db = new DataBase();
 	}
 
-	public void addPerson(FormEvent formEvent) {
 
-	}
 
 	public void saveToDb(FormEvent formEvent) {
 
@@ -31,22 +38,23 @@ public class Controller {
 		db.addPerson(person);
 	}
 
-	private Person convertFromEventToPerson(User ev) {
-	String name = ev.FirstName;
-	String occuptaion = ev.Role;
-	String ageCat = ev.Age;
-	String empCat = ev.Role;
+	private Person convertFromEventToPerson(FormEvent formEvent) {
+	String firstName = formEvent.firstName;
+	String lastName = formEvent.lastName;
+	String ageCat = formEvent.age;
+	String role = formEvent.role;
+	return null;
 	
-	switch (ageCat) {
-	case 0:
-		AgeCategory = AgeCategory.child
+//	switch (ageCat) {
+//	case 0:
+//		ageCat = AgeCategory._18.toString();
+//		break;
+//
+//	default:
+//		break;
+//	}
 		
-		break;
-
-	default:
-		break;
 	}
-
 	public void connect() {
 		try {
 			db.connect();
