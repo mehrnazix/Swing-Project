@@ -3,6 +3,7 @@ package ir.mahan.train.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
@@ -33,6 +34,10 @@ public class Controller {
 		db.addPerson(person);
 	}
 
+	public void savePerson (File file) throws IOException {
+		db.saveToFile(file);
+	}
+	
 	private Person convertFromEventToPerson(FormEvent formEvent) {
 	String firstName = formEvent.firstName;
 	String lastName = formEvent.lastName;
