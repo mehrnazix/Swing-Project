@@ -5,15 +5,14 @@ import java.io.Serializable;
 public class Person implements Serializable {
 
 	public Person(String firstName, String lastName, String role, String age,
-			String gender, String city, String favouriteSport,
-			boolean isEmployee, int salary) {
+			String gender, String city, String favouriteSport) {
 		super();
-		firstName = firstName;
-		lastName = lastName;
-		role = role;
-		age = age;
-		gender = gender;
-		city = city;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.role = role;
+		this.age = age;
+		this.gender = gender;
+		this.city = city;
 		this.favouriteSport = favouriteSport;
 		this.isEmployee = isEmployee;
 		this.salary = salary;

@@ -155,31 +155,32 @@ public class MainFrame extends JFrame {
 	private class MenuItemActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent event) {
+			filechooser = new JFileChooser();
+			filechooser.setAcceptAllFileFilterUsed(false);
+			PersonFileFilter personFileFilter = new PersonFileFilter();
+			filechooser.addChoosableFileFilter(personFileFilter);
 			JMenuItem menuItem = (JMenuItem) event.getSource();
 			if (menuItem == exitMenuItem) {
 				System.exit(0);
 			} else if (menuItem == exportMenuItem) {
-				int result = filechooser.showSaveDialog(null);
-				if (result == JFileChooser.APPROVE_OPTION) {
+//				int result = filechooser.showSaveDialog(null);
 
-					System.out.println("sd");
-				}
 //				 FileManager fileManager = new FileManager();
 //				 try {
 //				 fileManager.exportToFile(dbForm);
 //				 } catch (IOException e) {
 //				 e.printStackTrace();
 //				 }
-//				if (filechooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
-//					File getSelectedFile = filechooser.getSelectedFile();
-//					try {
-//						controller.savePerson(getSelectedFile);
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+				if (filechooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					File getSelectedFile = filechooser.getSelectedFile();
+					try {
+						controller.savePerson(getSelectedFile);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
-//				}
+				}
 			} else if (menuItem == importMenuItem) {
 				FileManager fileManager = new FileManager();
 				try {

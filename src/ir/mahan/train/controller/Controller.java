@@ -9,6 +9,7 @@ import java.util.List;
 
 import ir.mahan.train.model.AgeCategory;
 import ir.mahan.train.model.DataBase;
+import ir.mahan.train.model.Gender;
 import ir.mahan.train.model.Person;
 import ir.mahan.train.view.FormEvent;
 
@@ -30,7 +31,7 @@ public class Controller {
 
 	public void addPerson(FormEvent formEvent) {
 
-		Person person = convertFromEventToPerson(formEvent);
+		Person person = convertFormEventToPerson(formEvent);
 		db.addPerson(person);
 	}
 
@@ -38,21 +39,43 @@ public class Controller {
 		db.saveToFile(file);
 	}
 	
-	private Person convertFromEventToPerson(FormEvent formEvent) {
-	String firstName = formEvent.firstName;
-	String lastName = formEvent.lastName;
-	String ageCat = formEvent.age;
-	String role = formEvent.role;
-	return null;
+	private Person convertFormEventToPerson(FormEvent e) {
+
+		String name = e.getFirstName();
+		String family = e.getLastName();
+		String role = e.getRole();
+		String age = e.getAge();
+		String gender = e.gender;
+		String city = e.city;
+		String favSport = e.favouriteSport;
+		
+		
+		Person person = new Person(name, family, role, city, gender, age,
+				favSport);
+		return person;
+
+	}
 	
-//	switch (ageCat) {
-//	case 0:
-//		ageCat = AgeCategory._18.toString();
-//		break;
-//
-//	default:
-//		break;
-//	}
+	private FormEvent convertFromEventToPerson(Person person) {
+		String name = person.getFirstName();
+		String family = person.getLastName();
+		String role = person.getRole();
+		String age = person.getAge();
+		String city = person.getCity();
+		String favSport = person.getFavouriteSport();
+		String gender = person.getGender();
+
+		FormEvent e = new FormEvent();
+		e.firstName = name;
+		e.lastName = family;
+		e.role = role;
+		e.age = age;
+		e.city = city;
+		e.favouriteSport = favSport;
+		e.gender = gender;
+
+		return e;
+
 		
 	}
 	public void connect() {
