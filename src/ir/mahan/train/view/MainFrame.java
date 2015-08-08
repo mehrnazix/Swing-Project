@@ -118,12 +118,12 @@ public class MainFrame extends JFrame {
 
 		});
 		
-		controller = new Controller(null);
+//		controller = new Controller(null);
 		toolbarPanel.setToolbarListener(new ItoolbarListener() {
 			
 			@Override
 			public void saveEventOccured() {
-				controller.saveToDb(null);
+			
 			}
 			
 			@Override

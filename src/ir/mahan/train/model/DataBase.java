@@ -72,10 +72,11 @@ public class DataBase {
 		
 		PreparedStatement checkstm = con.prepareStatement(SQLcheckCommand);
 		
-		for (Person person : people) {
+		
+		for (Person p : person) {
 			
-			int id = person.id; 
-			String name = person.getName();
+			int id = p.getId(); 
+			String name = p.getFirstName();
 			
 			checkstm.setInt(3, id);
 			ResultSet checkResult = checkstm.executeQuery();
