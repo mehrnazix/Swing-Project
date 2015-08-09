@@ -62,7 +62,11 @@ public class DataBase {
 		try {
 			
 			Person[] p =  (Person[]) ois.readObject();
-			people = Arrays.asList(p);
+			
+			people.clear();
+			
+			people.addAll(Arrays.asList(p));
+
 			ois.close();
 
 		} catch (ClassNotFoundException e) {
