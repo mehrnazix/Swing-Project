@@ -10,13 +10,12 @@ import java.io.Serializable;
 import javax.swing.JOptionPane;
 
 public class FormEvent {
-
+	
+	
 	public FormEvent() {
 		this.id = ++count;
 	}
-	
-	
-	
+
 	public FormEvent(String firstName, String lastName, EmpCategory empCategory,
 			AgeCategory age, Gender gender, String city,
 			FavouriteSport favouriteSport, boolean isEmployee, int salary) {

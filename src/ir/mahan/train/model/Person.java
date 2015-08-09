@@ -5,11 +5,16 @@ import java.io.Serializable;
 public class Person implements Serializable {
 
 	
+	
+	public Person() {
+		this.id = ++count;
+	}
+
 	public Person(int id, String firstName, String lastName,
 			EmpCategory empCategory, AgeCategory age, Gender gender,
 			String city, FavouriteSport favouriteSport, boolean isEmployee,
 			int salary) {
-		super();
+
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
