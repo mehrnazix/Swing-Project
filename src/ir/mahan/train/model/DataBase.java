@@ -25,7 +25,7 @@ import javax.swing.SwingUtilities;
 import org.omg.CORBA.PRIVATE_MEMBER;
 
 public class DataBase {
-	private ArrayList<Person> people;
+	private List<Person> people;
 
 	Connection con;
 	private int port;
@@ -55,17 +55,21 @@ public class DataBase {
 		oos.close();
 	}
 	
-	public void loadFromFile(File file) throws IOException {
+	public List<Person> loadFromFile(File file) throws IOException {
 		FileInputStream fis = new FileInputStream(file);
 		ObjectInputStream ois = new ObjectInputStream(fis);
+		
 		try {
-			Person[] persons = (Person[]) ois.readObject();
-			people.clear();
-			people.addAll(Arrays.asList(persons));
+			
+			Person[] p =  (Person[]) ois.readObject();
+			people = Arrays.asList(p);
+			ois.close();
+
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		ois.close();
+		return people;
+		
 	}
 	
 	public void addPerson(Person person) {
@@ -129,16 +133,16 @@ public class DataBase {
 		
 	}
 
-	public static void main(String[] args) {
-
-		DataBase db  = new DataBase();
-		try {
-			db.connect();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
+//	public static void main(String[] args) {
+//
+//		DataBase db  = new DataBase();
+//		try {
+//			db.connect();
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//	}
 
 }

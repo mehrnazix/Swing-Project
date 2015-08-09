@@ -1,5 +1,7 @@
 package ir.mahan.train.view;
 
+import ir.mahan.train.model.AgeCategory;
+
 import java.awt.FlowLayout;
 import java.util.Enumeration;
 
@@ -17,9 +19,9 @@ public class AgePanel extends JPanel {
 	public AgePanel(){
 		
 		gb = new ButtonGroup();
-		rd_18 = new JRadioButton("18", true);
-		rd_20_30 = new JRadioButton("20 - 30");
-		rd_more = new JRadioButton("More");
+		rd_18 = new JRadioButton(AgeCategory._18.toString(), true);
+		rd_20_30 = new JRadioButton(AgeCategory._20_30.toString());
+		rd_more = new JRadioButton(AgeCategory.more.toString());
 		gb.add(rd_18);
 		gb.add(rd_20_30);
 		gb.add(rd_more);
@@ -30,13 +32,15 @@ public class AgePanel extends JPanel {
 		this.add(rd_more);
 	}
 	
-    public String getSelectedButtonText() {
+    public AgeCategory getSelectedButtonText() {
         for (Enumeration<AbstractButton> buttons = gb.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
 
             if (button.isSelected()) {
-                return button.getText();
+                return AgeCategory.valueOf(button.getText());
             }
+            
+
         }
 
         return null;

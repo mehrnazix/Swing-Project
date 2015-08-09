@@ -41,7 +41,7 @@ public class PersonTableModel extends AbstractTableModel {
 		case 2: 
 			return formEvent.lastName;
 		case 3:
-			return formEvent.role;
+			return formEvent.empCategory;
 		case 4: 
 			return formEvent.age;
 		case 5:
@@ -81,7 +81,7 @@ public class PersonTableModel extends AbstractTableModel {
 		case 2:
 			p.setLastName((String)value);
 		case 3:
-			p.setAge((String)value);
+			p.setAge((AgeCategory)value);
 		default:
 			return;
 		}

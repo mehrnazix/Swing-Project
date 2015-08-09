@@ -1,6 +1,6 @@
 package ir.mahan.train.model;
 
-public enum UserFavouriteSportEnum {
+public enum FavouriteSport {
 	Football,
 	Volleyball,
 	Other

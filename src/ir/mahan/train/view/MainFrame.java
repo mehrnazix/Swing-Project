@@ -41,6 +41,7 @@ public class MainFrame extends JFrame {
 	private JFileChooser filechooser;
 	private ToolBarPanel toolbarPanel;
 	private Controller controller;
+	private List<FormEvent> fe;
 	
 
 	public MainFrame(String title) {
@@ -48,9 +49,10 @@ public class MainFrame extends JFrame {
 		addMenuBar();
 		setView();
 		addComponent();
+		controller = new Controller();
 	}
 
-	private void addMenuBar() {
+	private JMenuBar addMenuBar() {
 		fileMenuBar = new JMenuBar();
 		fileMenu = new JMenu("File");
 
@@ -67,7 +69,6 @@ public class MainFrame extends JFrame {
 		fileMenu.add(importMenuItem);
 		fileMenu.addSeparator();
 		fileMenu.add(exitMenuItem);
-		fileMenuBar.add(fileMenu);
 
 		prefsItem = new JMenuItem("Preferences");
 		showMenu = new JMenu("SHOW");
@@ -78,9 +79,11 @@ public class MainFrame extends JFrame {
 		showFormCheckBoxItem.setSelected(true);
 
 		windowBar = new JMenu("Window");
-
-		fileMenuBar.add(windowBar);
 		windowBar.add(showMenu);
+
+
+		fileMenuBar.add(fileMenu);
+		fileMenuBar.add(windowBar);
 
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 		exitMenuItem.setMnemonic(KeyEvent.VK_X);
@@ -94,8 +97,9 @@ public class MainFrame extends JFrame {
 		exportMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
 				ActionEvent.CTRL_MASK));
 
+		return fileMenuBar;
 	}
-
+	
 	private void addComponent() {
 		textPanel = new TextPanel();
 		tablePanel = new TablePanel();
@@ -110,6 +114,7 @@ public class MainFrame extends JFrame {
 					textPanel.setText(formEvent.ToString("::"));
 					dbForm.add(formEvent);
 					tablePanel.refresh();
+					controller.addPerson(formEvent);
 				} else {
 					JOptionPane optionPane = new JOptionPane();
 					optionPane.showMessageDialog(null,
@@ -120,7 +125,6 @@ public class MainFrame extends JFrame {
 
 		});
 		
-//		controller = new Controller(null);
 		toolbarPanel.setToolbarListener(new ItoolbarListener() {
 			
 			@Override
@@ -140,9 +144,10 @@ public class MainFrame extends JFrame {
 		tabbedpane.add("Text Area", textPanel);
 		tabbedpane.add("Person DB", tablePanel);
 		splitPane.setOneTouchExpandable(true);
-		this.add(splitPane, BorderLayout.EAST);
-		this.add(fileMenuBar, BorderLayout.NORTH);
-		this.add(toolbarPanel, BorderLayout.SOUTH);
+		this.add(splitPane, BorderLayout.CENTER);
+		setJMenuBar(addMenuBar());
+		
+		this.add(toolbarPanel, BorderLayout.PAGE_START);
 	}
 
 	private void setView() {
@@ -182,19 +187,34 @@ public class MainFrame extends JFrame {
 					
 				}
 			} else if (menuItem == importMenuItem) {
-				FileManager fileManager = new FileManager();
-				try {
-					List<FormEvent> userList = fileManager.importFromFile();
-					if (userList != null) {
-						for (FormEvent u : userList) {
-							textPanel.setText(u.ToString("/"));
-							dbForm.add(u);
+				
+				if (filechooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					File getSelectedFile = filechooser.getSelectedFile();
+					try {
+						fe = new ArrayList();
+						fe = controller.loadPerson(getSelectedFile);
+						for (FormEvent f : fe) {
+							textPanel.setText(f.ToString("/"));
+							dbForm.add(f);
 						}
 						tablePanel.refresh();
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
+//				FileManager fileManager = new FileManager();
+//				try {
+//					List<FormEvent> userList = fileManager.importFromFile();
+//					if (userList != null) {
+//						for (FormEvent u : userList) {
+//							textPanel.setText(u.ToString("/"));
+//							dbForm.add(u);
+//						}
+//						tablePanel.refresh();
+//					}
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
 			}
 
 		}

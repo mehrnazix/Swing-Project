@@ -2,7 +2,7 @@ package ir.mahan.train.view;
 
 import ir.mahan.train.model.AgeCategory;
 import ir.mahan.train.model.Gender;
-import ir.mahan.train.model.UserFavouriteSportEnum;
+import ir.mahan.train.model.FavouriteSport;
 import ir.mahan.train.model.EmpCategory;
 
 import java.awt.Dimension;
@@ -72,7 +72,7 @@ public class FormPanel extends JPanel {
 		genderCB = new JComboBox(Gender.values());
 		genderLbl = new JLabel("Gender :");
 		userCity = new UserCityPanel();
-		userFavouriteSportList = new JList(UserFavouriteSportEnum.values());
+		userFavouriteSportList = new JList(FavouriteSport.values());
 		userFavouriteSportLbl = new JLabel("Favourite Sport :");
 		userFavouriteSportList.setSelectedIndex(0);
 		cityLbl = new JLabel("City :");
@@ -251,10 +251,10 @@ public class FormPanel extends JPanel {
 					formEvent.firstName = firstNameTxt.getText();
 					formEvent.lastName = lastNameTxt.getText();
 					formEvent.age = agePanel.getSelectedButtonText();
-					formEvent.gender = genderCB.getSelectedItem().toString();
-					formEvent.role = roleCB.getSelectedItem().toString();
+					formEvent.gender = (Gender) genderCB.getSelectedItem();
+					formEvent.empCategory = (EmpCategory) roleCB.getSelectedItem();
 					formEvent.city = userCity.getSelectedButtonText();
-					formEvent.favouriteSport = userFavouriteSportList.getSelectedValue().toString();
+					formEvent.favouriteSport = (FavouriteSport) userFavouriteSportList.getSelectedValue();
 					formEvent.isEmployee = isEmployeeChB.isSelected();
 					
 					try {
@@ -263,13 +263,7 @@ public class FormPanel extends JPanel {
 					} catch (Exception e) {
 						
 					}
-//					if (salaryTxt.getText() != null) {
-//						user.salary = Integer.parseInt(salaryTxt.getText());
-//					} else {
-//						System.out.println("hello");
-//					}
-//					
-					
+	
 					
 					istringListener.formEventEmitted(formEvent);
 				}
