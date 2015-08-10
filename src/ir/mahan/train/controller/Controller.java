@@ -46,7 +46,7 @@ public class Controller {
 		db.getPeopleList();
 	}
 	
-	public void savePerson (File file) throws IOException {
+	public void savePerson (File file) throws IOException{
 		db.saveToFile(file);
 	}
 	

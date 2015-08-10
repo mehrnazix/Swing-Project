@@ -5,6 +5,7 @@ import ir.mahan.train.view.MainFrame;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import org.omg.CORBA.PRIVATE_MEMBER;
@@ -33,11 +35,11 @@ public class DataBase {
 	private String pass;
 	private Properties properties;
 	private InputStream input;
-	
+
 	public DataBase() {
 		this.people = new ArrayList<Person>();
 		Properties properties = new Properties();
-		
+
 		try {
 			File X = new File("DBconfig.properties");
 			FileInputStream input = new FileInputStream(X);
@@ -46,25 +48,26 @@ public class DataBase {
 			// TODO: handle exception
 		}
 	}
-	
+
 	public void saveToFile(File file) throws IOException {
 		FileOutputStream fos = new FileOutputStream(file + ".per");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		Person[] persons = people.toArray(new Person[people.size()]);
 		oos.writeObject(persons);
 		oos.close();
+
 	}
-	
+
 	public List<Person> loadFromFile(File file) throws IOException {
 		FileInputStream fis = new FileInputStream(file);
 		ObjectInputStream ois = new ObjectInputStream(fis);
-		
+
 		try {
-			
-			Person[] p =  (Person[]) ois.readObject();
-			
+
+			Person[] p = (Person[]) ois.readObject();
+
 			people.clear();
-			
+
 			people.addAll(Arrays.asList(p));
 
 			ois.close();
@@ -73,26 +76,26 @@ public class DataBase {
 			e.printStackTrace();
 		}
 		return people;
-		
+
 	}
-	
+
 	public void addPerson(Person person) {
 		people.add(person);
 	}
-	
-	public void deletePerson(int index){
+
+	public void deletePerson(int index) {
 		people.remove(index);
 	}
-	
+
 	public void setPerson(ArrayList<Person> person) {
 		this.people = person;
 	}
-	
+
 	public List<Person> getPeopleList() {
 		// TODO Auto-generated method stub
 		return people;
 	}
-	
+
 	public void connect() throws Exception {
 		if (con != null) {
 			return;
@@ -120,33 +123,32 @@ public class DataBase {
 
 	public void save() throws SQLException {
 		String SQLcheckCommand = "select count(*) as count from person where id=?";
-		
+
 		PreparedStatement checkstm = con.prepareStatement(SQLcheckCommand);
-		
-		
+
 		for (Person p : people) {
-			
-			int id = p.getId(); 
+
+			int id = p.getId();
 			String name = p.getFirstName();
-			
+
 			checkstm.setInt(3, id);
 			ResultSet checkResult = checkstm.executeQuery();
 			checkResult.next();
 			int count = checkResult.getInt(1);
 		}
-		
+
 	}
 
-//	public static void main(String[] args) {
-//
-//		DataBase db  = new DataBase();
-//		try {
-//			db.connect();
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//	}
+	// public static void main(String[] args) {
+	//
+	// DataBase db = new DataBase();
+	// try {
+	// db.connect();
+	// } catch (Exception e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	//
+	// }
 
 }

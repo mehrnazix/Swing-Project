@@ -178,13 +178,13 @@ public class MainFrame extends JFrame {
 //				 }
 				if (filechooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
 					File getSelectedFile = filechooser.getSelectedFile();
-					try {
-						controller.savePerson(getSelectedFile);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
+						try {
+							controller.savePerson(getSelectedFile);
+						} catch (IOException e) {					
+							JOptionPane.showMessageDialog(MainFrame.this,
+									"File does not exist", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
 				}
 			} else if (menuItem == importMenuItem) {
 				
