@@ -105,7 +105,7 @@ public class DataBase {
 		} catch (ClassNotFoundException e) {
 			throw new Exception("Driver not found");
 		}
-		String connectionURL = "jdbc:sqlserver://swsql.mahanair.aero;user=sa;password=123;database=c005_s01_n";
+		String connectionURL = "jdbc:sqlserver://swsql.mahanair.aero;user=sa;password=123;database=JavaTraining";
 		con = DriverManager.getConnection(connectionURL);
 		System.out.println("connected");
 	}
