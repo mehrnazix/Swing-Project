@@ -121,45 +121,52 @@ public class DataBase {
 
 	public void save() throws SQLException {
 //		String SQLcheckCommand = "select count(*) as count from person where id=?";
-//
-//		PreparedStatement checkstm = con.prepareStatement(SQLcheckCommand);
-		Statement statment = con.createStatement();
 
-		String SQL = "select * from G1";
+
+		String insertTableSql = "Insert into g2.person(Id, Firstname, Lastname, gender, age, category, city, sport, salary) values(?,?,?,?,?,?,?,?,?)";
+		PreparedStatement preparedStatement = con.prepareStatement(insertTableSql);
 		
-		ResultSet resultSet = statment.executeQuery(SQL);
 		
-		while (resultSet.next()) {
-			System.out.println(resultSet.getString(1));
-		}
-//		for (Person p : people) {
-//
-//			int id = p.getId();
+//		ResultSet resultSet = statment.executeQuery(SQL);
+//		
+//		while (resultSet.next()) {
+//			System.out.println(resultSet.getString(2));
+//		}
+		for (Person p : people) {
+
+			int id = p.getId();
 //			String name = p.getFirstName();
-//
+			
+			preparedStatement.setInt(1, id);
+			preparedStatement.setString(2, p.getFirstName());
+			preparedStatement.setString(3, p.getLastName());
+			preparedStatement.setObject(4, p.getGender());
+			
+			
+			preparedStatement.executeUpdate(insertTableSql);
+
 //			checkstm.setInt(3, id);
 //			ResultSet checkResult = checkstm.executeQuery();
 //			checkResult.next();
 //			int count = checkResult.getInt(1);
-//		}
+		}
 		
-//		statment.executeUpdate("INSERT INTO ")
 
-	}re
+	}
 	
 	
 
-	 public static void main(String[] args) {
-	
-	 DataBase db = new DataBase();
-	 try {
-	 db.connect();
-	 db.save();
-	 } catch (Exception e) {
-	 // TODO Auto-generated catch block
-	 e.printStackTrace();
-	 }
-	
-	 }
+//	 public static void main(String[] args) {
+//	
+//	 DataBase db = new DataBase();
+//	 try {
+//	 db.connect();
+//	 db.save();
+//	 } catch (Exception e) {
+//	 // TODO Auto-generated catch block
+//	 e.printStackTrace();
+//	 }
+//	
+//	 }
 
 }

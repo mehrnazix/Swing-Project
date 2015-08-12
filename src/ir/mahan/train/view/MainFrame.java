@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,20 +126,19 @@ public class MainFrame extends JFrame {
 		
 		toolbarPanel.setToolbarListener(new ItoolbarListener() {
 			
-			@Override
-			public void saveEventOccured(FormEvent formEvent) {
-				try {
-					controller.saveToDb(formEvent);
-				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(MainFrame.this, "Can not save to database", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-			
+
 			@Override
 			public void refreshEventOccured() {
 				// TODO Auto-generated method stub
 				
 			}
+
+			@Override
+			public void saveEventOccured() {
+				controller.saveToDb(formEvent);
+				
+			}
+
 
 		});
 		tabbedpane = new JTabbedPane();
