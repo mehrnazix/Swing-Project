@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +27,8 @@ public class Controller {
 		this.db = new DataBase();
 	}
 
-	public void saveToDb(FormEvent formEvent) {
-
+	public void saveToDb(FormEvent formEvent) throws SQLException {
+		db.save();
 	}
 
 	public void loadFromDb(FormEvent formEvent) {

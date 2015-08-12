@@ -16,15 +16,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
 
 public class DataBase {
 	private List<Person> people;
@@ -122,33 +120,46 @@ public class DataBase {
 	}
 
 	public void save() throws SQLException {
-		String SQLcheckCommand = "select count(*) as count from person where id=?";
+//		String SQLcheckCommand = "select count(*) as count from person where id=?";
+//
+//		PreparedStatement checkstm = con.prepareStatement(SQLcheckCommand);
+		Statement statment = con.createStatement();
 
-		PreparedStatement checkstm = con.prepareStatement(SQLcheckCommand);
-
-		for (Person p : people) {
-
-			int id = p.getId();
-			String name = p.getFirstName();
-
-			checkstm.setInt(3, id);
-			ResultSet checkResult = checkstm.executeQuery();
-			checkResult.next();
-			int count = checkResult.getInt(1);
+		String SQL = "select * from G1";
+		
+		ResultSet resultSet = statment.executeQuery(SQL);
+		
+		while (resultSet.next()) {
+			System.out.println(resultSet.getString(1));
 		}
+//		for (Person p : people) {
+//
+//			int id = p.getId();
+//			String name = p.getFirstName();
+//
+//			checkstm.setInt(3, id);
+//			ResultSet checkResult = checkstm.executeQuery();
+//			checkResult.next();
+//			int count = checkResult.getInt(1);
+//		}
+		
+//		statment.executeUpdate("INSERT INTO ")
 
-	}
+	}re
+	
+	
 
-	// public static void main(String[] args) {
-	//
-	// DataBase db = new DataBase();
-	// try {
-	// db.connect();
-	// } catch (Exception e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	// }
+	 public static void main(String[] args) {
+	
+	 DataBase db = new DataBase();
+	 try {
+	 db.connect();
+	 db.save();
+	 } catch (Exception e) {
+	 // TODO Auto-generated catch block
+	 e.printStackTrace();
+	 }
+	
+	 }
 
 }
