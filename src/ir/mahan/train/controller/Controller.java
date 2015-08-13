@@ -27,7 +27,13 @@ public class Controller {
 		this.db = new DataBase();
 	}
 
-	public void saveToDb(FormEvent formEvent) throws SQLException {
+	public void saveToDb() throws SQLException {
+		try {
+			db.connect();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		db.save();
 	}
 

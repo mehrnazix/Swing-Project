@@ -140,7 +140,7 @@ public class DataBase {
 			preparedStatement.setInt(1, id);
 			preparedStatement.setString(2, p.getFirstName());
 			preparedStatement.setString(3, p.getLastName());
-			preparedStatement.setObject(4, p.getGender());
+			preparedStatement.setString(4, p.getGender().name());
 			
 			
 			preparedStatement.executeUpdate(insertTableSql);
