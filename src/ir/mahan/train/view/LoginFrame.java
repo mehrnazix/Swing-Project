@@ -26,7 +26,7 @@ public class LoginFrame extends JFrame{
 	
 	public LoginFrame(String title) {
 		super(title);
-		this.setSize(300, 170);
+		this.setSize(300, 140);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		

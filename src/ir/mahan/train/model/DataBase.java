@@ -120,7 +120,7 @@ public class DataBase {
 			String user = resultSet.getString(1);
 			String pass = resultSet.getString(2);
 			System.out.println(user + pass);
-			if (user == username && pass == password) {
+			if (user.equals(username) && pass.equals(password)) {
 				return true;
 			}
 		}
