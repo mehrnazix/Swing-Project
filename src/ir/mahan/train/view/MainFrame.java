@@ -50,7 +50,7 @@ public class MainFrame extends JFrame {
 		addMenuBar();
 		setView();
 		addComponent();
-		controller = new Controller();
+		this.controller = new Controller();
 	}
 
 	private JMenuBar addMenuBar() {
@@ -138,7 +138,7 @@ public class MainFrame extends JFrame {
 			public void saveEventOccured() {
 				try {
 					controller.saveToDb();
-				} catch (SQLException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

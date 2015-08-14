@@ -27,13 +27,7 @@ public class Controller {
 		this.db = new DataBase();
 	}
 
-	public void saveToDb() throws SQLException {
-		try {
-			db.connect();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void saveToDb() throws Exception {
 		db.save();
 	}
 
