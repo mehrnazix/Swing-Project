@@ -78,6 +78,10 @@ public class Person implements Serializable {
 	public String getCity() {
 		return city;
 	}
+	
+	public boolean getIsEmployee(){
+		return isEmployee;
+	}
 	public void setCity(String city) {
 		this.city = city;
 	}

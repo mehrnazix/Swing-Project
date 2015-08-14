@@ -31,8 +31,14 @@ public class Controller {
 		db.save();
 	}
 
-	public void loadFromDb(FormEvent formEvent) {
-
+	public List<FormEvent> loadFromDb() throws Exception {
+		people = db.load();
+		formEvents = new ArrayList<FormEvent>();
+		for (Person p : people) {
+			FormEvent e = convertPersonToFormEvent(p);
+			formEvents.add(e);
+		}
+		return formEvents;
 	}
 
 	public void addPerson(FormEvent formEvent) {
@@ -71,9 +77,11 @@ public class Controller {
 		String city = person.getCity();
 		FavouriteSport favouriteSport = person.getFavouriteSport();
 		int salary = person.getSalary();
+		boolean isEmployee = person.getIsEmployee();
 		
 		
-		FormEvent formEvent = new FormEvent(firstName,lastName,empCategory,age,gender,city,favouriteSport,true,salary);
+		
+		FormEvent formEvent = new FormEvent(firstName,lastName,empCategory,age,gender,city,favouriteSport,isEmployee,salary);
 		return formEvent;
 	}
 	
@@ -88,9 +96,9 @@ public class Controller {
 		String city = formEvent.getCity();
 		FavouriteSport favouriteSport = formEvent.getFavouriteSport();
 		int salary = formEvent.getSalary();
+		boolean isEmployee = formEvent.getIsEmployee();
 		
-		
-		Person person = new Person(id,firstName,lastName,empCategory,age,gender,city,favouriteSport,true,salary);
+		Person person = new Person(id,firstName,lastName,empCategory,age,gender,city,favouriteSport,isEmployee,salary);
 		return person;
 
 	}

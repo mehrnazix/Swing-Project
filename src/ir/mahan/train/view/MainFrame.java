@@ -130,7 +130,18 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void refreshEventOccured() {
-				// TODO Auto-generated method stub
+				try {
+					fe = new ArrayList<>();
+					fe = controller.loadFromDb();
+					for (FormEvent formEvent : fe) {
+						textPanel.setText(formEvent.ToString(";"));
+						dbForm.add(formEvent);
+						
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
 

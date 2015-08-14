@@ -58,6 +58,10 @@ public class FormEvent {
 	public int getId() {
 		return id;
 	}
+	
+	public boolean getIsEmployee(){
+		return isEmployee;
+	}
 
 	public AgeCategory getAge() {
 		return age;
