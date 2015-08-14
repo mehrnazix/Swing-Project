@@ -108,6 +108,27 @@ public class DataBase {
 		System.out.println("connected");
 	}
 
+	public boolean chekUserValidity(String username, String password) throws Exception {
+		
+		this.connect();
+		
+		String getData = "select * from g2.users";
+		PreparedStatement preparedStatement = con.prepareStatement(getData);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		
+		while (resultSet.next()) {
+			String user = resultSet.getString(1);
+			String pass = resultSet.getString(2);
+			System.out.println(user + pass);
+			if (user == username && pass == password) {
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
+	
 	public void disConnect() throws Exception {
 		if (con != null) {
 			try {

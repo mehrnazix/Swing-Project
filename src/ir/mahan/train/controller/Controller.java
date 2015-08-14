@@ -41,6 +41,13 @@ public class Controller {
 		return formEvents;
 	}
 
+	public boolean checkUser (String username, String password) throws Exception {
+		if (db.chekUserValidity(username, password)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public void addPerson(FormEvent formEvent) {
 
 		Person person = convertFormEventToPerson(formEvent);
