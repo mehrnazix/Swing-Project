@@ -105,7 +105,7 @@ public class DataBase {
 		}
 		String connectionURL = "jdbc:sqlserver://swsql.mahanair.aero;user=sa;password=123;database=javaTraining";
 		con = DriverManager.getConnection(connectionURL);
-		System.out.println("connected");
+//		System.out.println("connected");
 	}
 
 	public boolean chekUserValidity(String username, String password) throws Exception {
@@ -119,7 +119,6 @@ public class DataBase {
 		while (resultSet.next()) {
 			String user = resultSet.getString(1);
 			String pass = resultSet.getString(2);
-			System.out.println(user + pass);
 			if (user.equals(username) && pass.equals(password)) {
 				return true;
 			}
@@ -133,16 +132,17 @@ public class DataBase {
 		if (con != null) {
 			try {
 				con.close();
-				System.out.println("disconnected");
+//				System.out.println("disconnected");
 			} catch (SQLException e) {
 				throw new Exception("Could not dissconnect...");
 			}
 		}
 	}
 
-	public void save() throws Exception {
-		this.connect();
-		//		String SQLcheckCommand = "select count(*) as count from person where id=?";
+	public void save() throws SQLException {
+		String SQLcheckCommand = "select count(*) as count from person where id=?";
+		PreparedStatement checkStatement = con.prepareStatement(SQLcheckCommand);
+		
 //		String getQuery = "select * from g2.person where id=?";
 		String insertTableSql = "insert into G2.Person "
 				+ "(ID, FirstName, LastName, Gender, Age, Category, City, Sport, IsEmployee, Salary)"
@@ -176,13 +176,11 @@ public class DataBase {
 //			checkResult.next();
 //			int count = checkResult.getInt(1);
 		}
-		con.close();
 		preparedStatement.close();
 
 	}
 	
-	public List<Person> load() throws Exception {
-		this.connect();
+	public List<Person> load() throws SQLException {
 		
 //		String loadData = "select * from g2.person where id=? and firstname=? and lastname=? and gender=?"
 //				+ "and age=? and category=? and city=? and sport=? and isemployee=? and salary=?";

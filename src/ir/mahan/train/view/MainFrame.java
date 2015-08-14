@@ -43,6 +43,7 @@ public class MainFrame extends JFrame {
 	private ToolBarPanel toolbarPanel;
 	private Controller controller;
 	private List<FormEvent> fe;
+	private LoginFrame loginFrame;
 	
 
 	public MainFrame(String title) {
@@ -107,6 +108,7 @@ public class MainFrame extends JFrame {
 		dbForm = new ArrayList<FormEvent>();
 		tablePanel.setData(dbForm);
 		formPanel = new FormPanel();
+		
 		toolbarPanel = new ToolBarPanel();
 		
 		formPanel.setIstringListener(new IformEvent<FormEvent>() {
@@ -130,29 +132,49 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void refreshEventOccured() {
-				try {
-					fe = new ArrayList<>();
-					fe = controller.loadFromDb();
-					for (FormEvent formEvent : fe) {
-						textPanel.setText(formEvent.ToString(";"));
-						dbForm.add(formEvent);
-						
+				
+					try {
+						controller.connectToDb();
+						fe = new ArrayList<>();
+						fe = controller.loadFromDb();
+						FormEvent.count = fe.size();
+						for (FormEvent formEvent : fe) {
+//							formEvent.count++;
+							textPanel.setText(formEvent.ToString(";"));
+							dbForm.add(formEvent);
+							
+						}
+//						controller.disconnectFromDb();
+					} catch (SQLException e) {
+						JOptionPane.showMessageDialog(MainFrame.this, e.getMessage()
+								, "error", JOptionPane.ERROR_MESSAGE);
+//						e.printStackTrace();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(MainFrame.this, "Can not connect database"
+								, "error", JOptionPane.ERROR_MESSAGE);
+//						e.printStackTrace();
 					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
 				
 			}
 
 			@Override
 			public void saveEventOccured() {
-				try {
-					controller.saveToDb();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					System.out.println(e.getMessage());
-				}
+					try {
+						controller.connectToDb();
+						controller.saveToDb();
+//						controller.disconnectFromDb();
+						JOptionPane.showMessageDialog(MainFrame.this, "Successfuly saved to database", "Success", JOptionPane.INFORMATION_MESSAGE);
+					} catch (SQLException e) {
+						JOptionPane.showMessageDialog(MainFrame.this, "Can not save to database"
+								, "error", JOptionPane.ERROR_MESSAGE);
+//						e.printStackTrace();
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(MainFrame.this, "Can not connect to database"
+								, "error", JOptionPane.ERROR_MESSAGE);
+//						e.printStackTrace();
+					}
+
 				
 			}
 

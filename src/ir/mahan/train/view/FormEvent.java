@@ -4,6 +4,7 @@ import ir.mahan.train.model.AgeCategory;
 import ir.mahan.train.model.EmpCategory;
 import ir.mahan.train.model.Gender;
 import ir.mahan.train.model.FavouriteSport;
+import ir.mahan.train.model.Person;
 
 import java.io.Serializable;
 
@@ -20,6 +21,7 @@ public class FormEvent {
 			AgeCategory age, Gender gender, String city,
 			FavouriteSport favouriteSport, boolean isEmployee, int salary) {
 		super();
+		this.id = ++count;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.empCategory = empCategory;
@@ -122,11 +124,13 @@ public class FormEvent {
 	public FavouriteSport favouriteSport;
 	public boolean isEmployee;
 	public int salary;
-	private static int count = 0;
+	public static int count;
+	
+	
 
 	public String ToString(String Seperator) {
 
-		return firstName + Seperator + lastName + Seperator + empCategory + Seperator
+		return id + Seperator + firstName + Seperator + lastName + Seperator + empCategory + Seperator
 				+ age + Seperator + gender + Seperator + city + Seperator
 				+ favouriteSport + Seperator + salary;
 	}

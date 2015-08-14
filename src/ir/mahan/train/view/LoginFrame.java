@@ -12,7 +12,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JTextField;
 
@@ -23,6 +25,8 @@ public class LoginFrame extends JFrame{
 	public JButton loginBtn;
 	public JTextField passwordFd;
 	public Controller controller;
+	public JPasswordField pf;
+	public static String user = "";
 	
 	public LoginFrame(String title) {
 		super(title);
@@ -61,6 +65,7 @@ public class LoginFrame extends JFrame{
 		gc.gridx = 0;
 		jPanel.add(passwordlbl, gc);
 		
+		gc.weightx = 2;
 		gc.gridy = 0;
 		gc.gridx = 1;
 		jPanel.add(userNametf, gc);
@@ -88,12 +93,16 @@ public class LoginFrame extends JFrame{
 			if (btn == loginBtn) {
 				String username = userNametf.getText();
 				String password = passwordFd.getText();
-				
 				try {
 					if (controller.checkUser(username, password)) {
-						System.out.println("login!");
+						user += username;
+						new MainFrame("User App");
+						LoginFrame.this.dispose();
+						
+						
 					} else {
-						System.out.println("nooooo");
+						JOptionPane.showMessageDialog(LoginFrame.this, "Incorret username or password", "Error",
+								JOptionPane.ERROR_MESSAGE);
 					}
 					
 				} catch (Exception e) {

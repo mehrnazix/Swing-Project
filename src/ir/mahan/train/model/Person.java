@@ -28,7 +28,7 @@ public class Person implements Serializable {
 	}
 	
 	private static final long serialVersionUID = 1L;
-	private static int count = 0;
+	private static int count;
 	public int id;
 	public String firstName;
 	public String lastName;

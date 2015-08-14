@@ -27,11 +27,11 @@ public class Controller {
 		this.db = new DataBase();
 	}
 
-	public void saveToDb() throws Exception {
+	public void saveToDb() throws SQLException  {
 		db.save();
 	}
 
-	public List<FormEvent> loadFromDb() throws Exception {
+	public List<FormEvent> loadFromDb() throws SQLException {
 		people = db.load();
 		formEvents = new ArrayList<FormEvent>();
 		for (Person p : people) {
@@ -111,12 +111,11 @@ public class Controller {
 	}
 
 
-	public void connect() {
-		try {
-			db.connect();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void connectToDb() throws Exception {
+		db.connect();
+	}
+	
+	public void disconnectFromDb() throws Exception {
+		db.disConnect();
 	}
 }
