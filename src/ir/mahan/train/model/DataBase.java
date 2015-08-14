@@ -122,34 +122,34 @@ public class DataBase {
 	public void save() throws Exception {
 		this.connect();
 		//		String SQLcheckCommand = "select count(*) as count from person where id=?";
-		String getQuery = "select * from g2.person where id=?";
-//		String insertTableSql = "insert into G2.Person (ID, FirstName, LastName, Gender) values (?,?,?,?)";
-		PreparedStatement preparedStatement = con.prepareStatement(getQuery);
-		preparedStatement.setInt(1, 1);
+//		String getQuery = "select * from g2.person where id=?";
+		String insertTableSql = "insert into G2.Person (ID, FirstName, LastName, Gender) values (?,?,?,?)";
+		PreparedStatement preparedStatement = con.prepareStatement(insertTableSql);
+//		preparedStatement.setInt(1, 1);
 		
-		ResultSet resultSet = preparedStatement.executeQuery(getQuery);
+//		ResultSet resultSet = preparedStatement.executeQuery();
 //		
-		while (resultSet.next()) {
-			System.out.println(resultSet.getString(2));
-		}
-//		for (Person p : people) {
+//		while (resultSet.next()) {
+//			System.out.println(resultSet.getString(1));
+//		}
+		for (Person p : people) {
 //
 //			int id = p.getId();
 //			String name = p.getFirstName();
 			
-//			preparedStatement.setInt(1, 1);
-//			preparedStatement.setString(2, "mehrnaz");
-//			preparedStatement.setString(3, "vafi");
-//			preparedStatement.setString(4, "female");
+			preparedStatement.setInt(1, p.getId());
+			preparedStatement.setString(2, p.getFirstName());
+			preparedStatement.setString(3, p.getLastName());
+			preparedStatement.setString(4, p.getGender().name());
 			
 			
-//			preparedStatement.executeUpdate(insertTableSql);
+			preparedStatement.executeUpdate();
 
 //			checkstm.setInt(3, id);
 //			ResultSet checkResult = checkstm.executeQuery();
 //			checkResult.next();
 //			int count = checkResult.getInt(1);
-//		}
+		}
 		//ds
 		con.close();
 		preparedStatement.close();
