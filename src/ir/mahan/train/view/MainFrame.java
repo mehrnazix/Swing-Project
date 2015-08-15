@@ -137,9 +137,8 @@ public class MainFrame extends JFrame {
 						controller.connectToDb();
 						fe = new ArrayList<>();
 						fe = controller.loadFromDb();
-						FormEvent.count = fe.size();
+//						FormEvent.count = fe.size();
 						for (FormEvent formEvent : fe) {
-//							formEvent.count++;
 							textPanel.setText(formEvent.ToString(";"));
 							dbForm.add(formEvent);
 							
