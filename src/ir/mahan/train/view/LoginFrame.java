@@ -33,19 +33,23 @@ public class LoginFrame extends JFrame{
 		this.setSize(300, 140);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
+	
+		controller = new Controller();
+		addComponent();
+		setLayout();
+	}
+	
+	public void addComponent() {
 		jPanel = new JPanel();
 		this.add(jPanel);
-		
 		userNamelbl = new JLabel("Username:");
 		passwordlbl = new JLabel("Password:");
 		userNametf = new JTextField();
 		passwordFd = new JTextField();
 		loginBtn = new JButton("Login");
-		controller = new Controller();
-		
-		
-		
+	}
+	
+	public void setLayout() {
 		jPanel.setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 		
@@ -81,7 +85,6 @@ public class LoginFrame extends JFrame{
 		jPanel.add(loginBtn, gc);
 
 		loginBtn.addActionListener(new LoginBtnClick());
-		
 	}
 	
 

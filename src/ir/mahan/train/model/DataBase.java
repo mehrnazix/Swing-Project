@@ -211,9 +211,9 @@ public class DataBase {
 		people.clear();
 		
 		while (resultSet.next()) {
-			if (checkUserExist(id)) {
-				
-			}
+//			if (checkUserExist(id)) {
+//				
+//			}
 			
 			int id = resultSet.getInt(1);
 			String firstName = resultSet.getString(2);
