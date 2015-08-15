@@ -2,7 +2,6 @@ package ir.mahan.train.view;
 
 import ir.mahan.train.controller.Controller;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -15,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.JTextField;
 
 public class LoginFrame extends JFrame{
@@ -30,6 +28,10 @@ public class LoginFrame extends JFrame{
 	
 	public LoginFrame(String title) {
 		super(title);
+		
+		
+		setLocationRelativeTo(null);
+		
 		controller = new Controller();
 		setView();
 		addComponent();

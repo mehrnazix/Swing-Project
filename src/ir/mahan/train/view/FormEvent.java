@@ -17,11 +17,11 @@ public class FormEvent {
 		this.id = ++count;
 	}
 
-	public FormEvent(String firstName, String lastName, EmpCategory empCategory,
+	public FormEvent(int id, String firstName, String lastName, EmpCategory empCategory,
 			AgeCategory age, Gender gender, String city,
 			FavouriteSport favouriteSport, boolean isEmployee, int salary) {
 		super();
-		this.id = ++count;
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.empCategory = empCategory;

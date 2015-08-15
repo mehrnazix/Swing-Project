@@ -88,7 +88,7 @@ public class Controller {
 		
 		
 		
-		FormEvent formEvent = new FormEvent(firstName,lastName,empCategory,age,gender,city,favouriteSport,isEmployee,salary);
+		FormEvent formEvent = new FormEvent(id,firstName,lastName,empCategory,age,gender,city,favouriteSport,isEmployee,salary);
 		return formEvent;
 	}
 	
