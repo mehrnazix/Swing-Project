@@ -30,13 +30,17 @@ public class LoginFrame extends JFrame{
 	
 	public LoginFrame(String title) {
 		super(title);
+		controller = new Controller();
+		setView();
+		addComponent();
+		setLayout();
+	}
+	
+	
+	public void setView() {
 		this.setSize(300, 140);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	
-		controller = new Controller();
-		addComponent();
-		setLayout();
 	}
 	
 	public void addComponent() {
