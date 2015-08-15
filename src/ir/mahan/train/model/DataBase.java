@@ -108,7 +108,22 @@ public class DataBase {
 //		System.out.println("connected");
 	}
 
-	public boolean chekUserValidity(String username, String password) throws Exception {
+	public boolean checkUserExist(int id) throws SQLException {
+		String getQuery = "select count(*) from g2.person where id=?";
+		PreparedStatement preparedStatement = con.prepareStatement(getQuery);
+		preparedStatement.setInt(1, id);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		while (resultSet.next()) {
+			int id2 = resultSet.getInt(1);
+			if (id2 == 0) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
+	public boolean chekLoginValidity(String username, String password) throws Exception {
 		
 		this.connect();
 		
@@ -143,7 +158,7 @@ public class DataBase {
 		String SQLcheckCommand = "select count(*) as count from person where id=?";
 		PreparedStatement checkStatement = con.prepareStatement(SQLcheckCommand);
 		
-//		String getQuery = "select * from g2.person where id=?";
+
 		String insertTableSql = "insert into G2.Person "
 				+ "(ID, FirstName, LastName, Gender, Age, Category, City, Sport, IsEmployee, Salary)"
 				+ " values (?,?,?,?,?,?,?,?,?,?)";
@@ -156,20 +171,23 @@ public class DataBase {
 //			System.out.println(resultSet.getString(1));
 //		}
 		for (Person p : people) {
-//			
-			preparedStatement.setInt(1, p.getId());
-			preparedStatement.setString(2, p.getFirstName());
-			preparedStatement.setString(3, p.getLastName());
-			preparedStatement.setString(4, p.getGender().name());
-			preparedStatement.setString(5, p.getAge().name());
-			preparedStatement.setString(6, p.getEmpCategory().name());
-			preparedStatement.setString(7, p.getCity());
-			preparedStatement.setString(8, p.getFavouriteSport().name());
-			preparedStatement.setBoolean(9, p.getIsEmployee());
-			preparedStatement.setInt(10, p.getSalary());
-			
-			
-			preparedStatement.executeUpdate();
+			if (this.checkUserExist(p.getId())) {
+				preparedStatement.setInt(1, p.getId());
+				preparedStatement.setString(2, p.getFirstName());
+				preparedStatement.setString(3, p.getLastName());
+				preparedStatement.setString(4, p.getGender().name());
+				preparedStatement.setString(5, p.getAge().name());
+				preparedStatement.setString(6, p.getEmpCategory().name());
+				preparedStatement.setString(7, p.getCity());
+				preparedStatement.setString(8, p.getFavouriteSport().name());
+				preparedStatement.setBoolean(9, p.getIsEmployee());
+				preparedStatement.setInt(10, p.getSalary());
+
+				preparedStatement.executeUpdate();
+			}
+			else {
+				System.out.println("incorrect user");
+			}
 
 //			checkstm.setInt(3, id);
 //			ResultSet checkResult = checkstm.executeQuery();
@@ -193,6 +211,9 @@ public class DataBase {
 		people.clear();
 		
 		while (resultSet.next()) {
+			if (checkUserExist(id)) {
+				
+			}
 			
 			int id = resultSet.getInt(1);
 			String firstName = resultSet.getString(2);

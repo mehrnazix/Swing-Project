@@ -42,7 +42,7 @@ public class Controller {
 	}
 
 	public boolean checkUser (String username, String password) throws Exception {
-		if (db.chekUserValidity(username, password)) {
+		if (db.chekLoginValidity(username, password)) {
 			return true;
 		}
 		return false;
