@@ -28,11 +28,11 @@ public class Controller {
 	}
 
 	public void saveToDb() throws SQLException  {
-		db.save();
+		db.saveToDb();
 	}
 
 	public List<FormEvent> loadFromDb() throws SQLException {
-		people = db.load();
+		people = db.loadFromDb();
 		formEvents = new ArrayList<FormEvent>();
 		for (Person p : people) {
 			FormEvent e = convertPersonToFormEvent(p);

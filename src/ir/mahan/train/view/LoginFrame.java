@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,10 +29,7 @@ public class LoginFrame extends JFrame{
 	
 	public LoginFrame(String title) {
 		super(title);
-		
-		
 		setLocationRelativeTo(null);
-		
 		controller = new Controller();
 		setView();
 		addComponent();
@@ -53,6 +51,9 @@ public class LoginFrame extends JFrame{
 		userNametf = new JTextField();
 		passwordFd = new JTextField();
 		loginBtn = new JButton("Login");
+		
+		jPanel.getRootPane().setDefaultButton(loginBtn);
+//		loginBtn.setMnemonic(KeyEvent.VK_ENTER);
 	}
 	
 	public void setLayout() {

@@ -132,9 +132,9 @@ public class DataBase {
 		ResultSet resultSet = preparedStatement.executeQuery();
 		
 		while (resultSet.next()) {
-			String user = resultSet.getString(1);
-			String pass = resultSet.getString(2);
-			if (user.equals(username) && pass.equals(password)) {
+			String user = resultSet.getString(1).toLowerCase();
+			String pass = resultSet.getString(2).toLowerCase();
+			if (user.equals(username.toLowerCase()) & pass.equals(password.toLowerCase())) {
 				return true;
 			}
 		}
@@ -154,7 +154,7 @@ public class DataBase {
 		}
 	}
 
-	public void save() throws SQLException {
+	public void saveToDb() throws SQLException {
 		String SQLcheckCommand = "select count(*) as count from person where id=?";
 		PreparedStatement checkStatement = con.prepareStatement(SQLcheckCommand);
 		
@@ -198,7 +198,7 @@ public class DataBase {
 
 	}
 	
-	public List<Person> load() throws SQLException {
+	public List<Person> loadFromDb() throws SQLException {
 		
 //		String loadData = "select * from g2.person where id=? and firstname=? and lastname=? and gender=?"
 //				+ "and age=? and category=? and city=? and sport=? and isemployee=? and salary=?";
@@ -208,12 +208,9 @@ public class DataBase {
 //		preparedStatement.setInt(1,1);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		
-		people.clear();
-		
+//		people.clear();
+		if (people.isEmpty()) {		
 		while (resultSet.next()) {
-//			if (checkUserExist(id)) {
-//				
-//			}
 			
 			int id = resultSet.getInt(1);
 			String firstName = resultSet.getString(2);
@@ -226,14 +223,13 @@ public class DataBase {
 			boolean isEmployee = resultSet.getBoolean(9);
 			int salary = resultSet.getInt(10);
 			
-//			System.out.println(firstName);
-			Person person = new Person(id,firstName,lastName,EmpCategory.valueOf(empCategory),AgeCategory.valueOf(ageCat)
-					,Gender.valueOf(gender),city,FavouriteSport.valueOf(favouriteSport),isEmployee, salary);
 			
-			people.add(person);
-			
+				Person person = new Person(id,firstName,lastName,EmpCategory.valueOf(empCategory),AgeCategory.valueOf(ageCat)
+						,Gender.valueOf(gender),city,FavouriteSport.valueOf(favouriteSport),isEmployee, salary);
+				
+				people.add(person);
 		}
-		
+		}	
 		return people;
 		
 	}

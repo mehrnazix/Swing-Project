@@ -111,7 +111,7 @@ public class MainFrame extends JFrame {
 		
 		toolbarPanel = new ToolBarPanel();
 		
-		formPanel.setIstringListener(new IformEvent<FormEvent>() {
+		formPanel.setformEventListener(new IformEvent<FormEvent>() {
 			public void formEventEmitted(FormEvent formEvent) {
 				if (Validation.userValidation(formEvent)) {
 					textPanel.setText(formEvent.ToString("::"));
@@ -234,6 +234,7 @@ public class MainFrame extends JFrame {
 					try {
 						fe = new ArrayList();
 						fe = controller.loadPerson(getSelectedFile);
+//						FormEvent.count = fe.size(); 
 						for (FormEvent f : fe) {
 							textPanel.setText(f.ToString("/"));
 							dbForm.add(f);
