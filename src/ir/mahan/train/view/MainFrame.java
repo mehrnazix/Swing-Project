@@ -236,6 +236,9 @@ public class MainFrame extends JFrame {
 						fe = controller.loadPerson(getSelectedFile);
 //						FormEvent.count = fe.size(); 
 						for (FormEvent f : fe) {
+//							if () {
+//								
+//							}
 							textPanel.setText(f.ToString("/"));
 							dbForm.add(f);
 						}

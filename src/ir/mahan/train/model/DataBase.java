@@ -208,8 +208,8 @@ public class DataBase {
 //		preparedStatement.setInt(1,1);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		
-//		people.clear();
-		if (people.isEmpty()) {		
+		people.clear();
+	
 		while (resultSet.next()) {
 			
 			int id = resultSet.getInt(1);
@@ -229,7 +229,7 @@ public class DataBase {
 				
 				people.add(person);
 		}
-		}	
+			
 		return people;
 		
 	}
