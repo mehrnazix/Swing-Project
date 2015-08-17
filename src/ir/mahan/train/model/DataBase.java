@@ -1,11 +1,8 @@
 package ir.mahan.train.model;
 
-import ir.mahan.train.view.FormEvent;
-import ir.mahan.train.view.MainFrame;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,23 +53,13 @@ public class DataBase {
 
 	}
 
-	public List<Person> loadFromFile(File file) throws IOException {
+	public List<Person> loadFromFile(File file) throws IOException, ClassNotFoundException {
 		FileInputStream fis = new FileInputStream(file);
 		ObjectInputStream ois = new ObjectInputStream(fis);
-
-		try {
-
-			Person[] p = (Person[]) ois.readObject();
-
-			people.clear();
-
-			people.addAll(Arrays.asList(p));
-
-			ois.close();
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		Person[] p = (Person[]) ois.readObject();
+		people.clear();
+		people.addAll(Arrays.asList(p));
+		ois.close();
 		return people;
 
 	}
@@ -147,29 +134,18 @@ public class DataBase {
 		if (con != null) {
 			try {
 				con.close();
-//				System.out.println("disconnected");
 			} catch (SQLException e) {
 				throw new Exception("Could not dissconnect...");
 			}
 		}
 	}
 
-	public void saveToDb() throws SQLException {
-		String SQLcheckCommand = "select count(*) as count from person where id=?";
-		PreparedStatement checkStatement = con.prepareStatement(SQLcheckCommand);
-		
-
+	public void saveToDb() throws Exception {		
 		String insertTableSql = "insert into G2.Person "
 				+ "(ID, FirstName, LastName, Gender, Age, Category, City, Sport, IsEmployee, Salary)"
 				+ " values (?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = con.prepareStatement(insertTableSql);
-//		preparedStatement.setInt(1, 1);
-		
-//		ResultSet resultSet = preparedStatement.executeQuery();
-//		
-//		while (resultSet.next()) {
-//			System.out.println(resultSet.getString(1));
-//		}
+
 		for (Person p : people) {
 			if (this.checkUserExist(p.getId())) {
 				preparedStatement.setInt(1, p.getId());
@@ -186,13 +162,9 @@ public class DataBase {
 				preparedStatement.executeUpdate();
 			}
 			else {
-				System.out.println("incorrect user");
+				throw new Exception("This user already is in database!");
 			}
 
-//			checkstm.setInt(3, id);
-//			ResultSet checkResult = checkstm.executeQuery();
-//			checkResult.next();
-//			int count = checkResult.getInt(1);
 		}
 		preparedStatement.close();
 
@@ -200,18 +172,11 @@ public class DataBase {
 	
 	public List<Person> loadFromDb() throws SQLException {
 		
-//		String loadData = "select * from g2.person where id=? and firstname=? and lastname=? and gender=?"
-//				+ "and age=? and category=? and city=? and sport=? and isemployee=? and salary=?";
-		
 		String loadData = "select * from g2.person";
 		PreparedStatement preparedStatement = con.prepareStatement(loadData);
-//		preparedStatement.setInt(1,1);
 		ResultSet resultSet = preparedStatement.executeQuery();
-		
 		people.clear();
-	
 		while (resultSet.next()) {
-			
 			int id = resultSet.getInt(1);
 			String firstName = resultSet.getString(2);
 			String lastName = resultSet.getString(3);
@@ -223,28 +188,12 @@ public class DataBase {
 			boolean isEmployee = resultSet.getBoolean(9);
 			int salary = resultSet.getInt(10);
 			
-			
-				Person person = new Person(id,firstName,lastName,EmpCategory.valueOf(empCategory),AgeCategory.valueOf(ageCat)
-						,Gender.valueOf(gender),city,FavouriteSport.valueOf(favouriteSport),isEmployee, salary);
+			Person person = new Person(id,firstName,lastName,EmpCategory.valueOf(empCategory),AgeCategory.valueOf(ageCat)
+					,Gender.valueOf(gender),city,FavouriteSport.valueOf(favouriteSport),isEmployee, salary);
 				
-				people.add(person);
+			people.add(person);
 		}
-			
 		return people;
-		
 	}
-
-//	 public static void main(String[] args) {
-//	
-//	 DataBase db = new DataBase();
-//	 try {
-//	 db.connect();
-//	 db.save();
-//	 } catch (Exception e) {
-//	 // TODO Auto-generated catch block
-//	 e.printStackTrace();
-//	 }
-//	
-//	 }
 
 }

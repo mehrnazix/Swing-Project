@@ -137,10 +137,10 @@ public class MainFrame extends JFrame {
 						controller.connectToDb();
 						fe = new ArrayList<>();
 						fe = controller.loadFromDb();
-						FormEvent.count = fe.size();
 						for (FormEvent formEvent : fe) {
 							textPanel.setText(formEvent.ToString(";"));
 							dbForm.add(formEvent);
+							FormEvent.count = formEvent.getId();
 							
 						}
 //						controller.disconnectFromDb();
@@ -159,20 +159,22 @@ public class MainFrame extends JFrame {
 
 			@Override
 			public void saveEventOccured() {
-					try {
-						controller.connectToDb();
-						controller.saveToDb();
-//						controller.disconnectFromDb();
-						JOptionPane.showMessageDialog(MainFrame.this, "Successfuly saved to database", "Success", JOptionPane.INFORMATION_MESSAGE);
-					} catch (SQLException e) {
-						JOptionPane.showMessageDialog(MainFrame.this, "Can not save to database"
-								, "error", JOptionPane.ERROR_MESSAGE);
-//						e.printStackTrace();
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(MainFrame.this, "Can not connect to database"
-								, "error", JOptionPane.ERROR_MESSAGE);
-//						e.printStackTrace();
-					}
+
+						try {
+							controller.connectToDb();
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(MainFrame.this,
+							e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						try {
+							controller.saveToDb();
+							JOptionPane.showMessageDialog(MainFrame.this, "Successfuly saved to database", "Success", JOptionPane.INFORMATION_MESSAGE);
+						} catch (Exception e) {
+							JOptionPane.showMessageDialog(MainFrame.this,
+							e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+						}
+
+					
 
 				
 			}
@@ -223,7 +225,7 @@ public class MainFrame extends JFrame {
 							controller.savePerson(getSelectedFile);
 						} catch (IOException e) {					
 							JOptionPane.showMessageDialog(MainFrame.this,
-									"File does not exist", "Error",
+									"File can not be save in this location", "Error",
 									JOptionPane.ERROR_MESSAGE);
 						}
 				}
@@ -231,9 +233,17 @@ public class MainFrame extends JFrame {
 				
 				if (filechooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
 					File getSelectedFile = filechooser.getSelectedFile();
-					try {
+					
 						fe = new ArrayList();
-						fe = controller.loadPerson(getSelectedFile);
+						try {
+							fe = controller.loadPerson(getSelectedFile);
+						} catch (ClassNotFoundException e) {
+							JOptionPane.showMessageDialog(MainFrame.this,
+									e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+						} catch (IOException e) {
+							JOptionPane.showMessageDialog(MainFrame.this,
+							e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+						}
 //						FormEvent.count = fe.size(); 
 						for (FormEvent f : fe) {
 //							if () {
@@ -243,9 +253,7 @@ public class MainFrame extends JFrame {
 							dbForm.add(f);
 						}
 						tablePanel.refresh();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					
 				}
 //				FileManager fileManager = new FileManager();
 //				try {

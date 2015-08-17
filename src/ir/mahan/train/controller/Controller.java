@@ -21,13 +21,14 @@ public class Controller {
 	DataBase db;
 	private List<Person> people;
 	private List<FormEvent> formEvents;
+	public String username;
 
 	
 	public Controller() {
 		this.db = new DataBase();
 	}
 
-	public void saveToDb() throws SQLException  {
+	public void saveToDb() throws Exception  {
 		db.saveToDb();
 	}
 
@@ -64,7 +65,7 @@ public class Controller {
 		db.saveToFile(file);
 	}
 	
-	public List<FormEvent> loadPerson (File file) throws IOException {
+	public List<FormEvent> loadPerson (File file) throws IOException, ClassNotFoundException {
 		people = db.loadFromFile(file);
 		formEvents = new ArrayList<FormEvent>();
 		for (Person p : people) {
