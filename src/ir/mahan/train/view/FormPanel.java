@@ -48,7 +48,7 @@ public class FormPanel extends JPanel {
 	private JLabel salaryLbl;
 	private JTextField salaryTxt;
 
-	public void setIstringListener(IformEvent istringListener) {
+	public void setformEventListener(IformEvent istringListener) {
 		this.istringListener = istringListener;
 	}
 

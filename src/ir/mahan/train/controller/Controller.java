@@ -119,4 +119,8 @@ public class Controller {
 	public void disconnectFromDb() throws Exception {
 		db.disConnect();
 	}
+
+	public void deletePerson(int row) {
+		db.deletePerson(row);
+	}
 }

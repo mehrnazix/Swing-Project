@@ -68,6 +68,7 @@ public class DataBase {
 		people.add(person);
 	}
 
+	//TODO also delete from database
 	public void deletePerson(int index) {
 		people.remove(index);
 	}
@@ -119,8 +120,8 @@ public class DataBase {
 		ResultSet resultSet = preparedStatement.executeQuery();
 		
 		while (resultSet.next()) {
-			String user = resultSet.getString(1).toLowerCase();
-			String pass = resultSet.getString(2).toLowerCase();
+			String user = resultSet.getString(2).toLowerCase();
+			String pass = resultSet.getString(3).toLowerCase();
 			if (user.equals(username.toLowerCase()) & pass.equals(password.toLowerCase())) {
 				return true;
 			}

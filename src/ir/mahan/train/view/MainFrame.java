@@ -109,6 +109,17 @@ public class MainFrame extends JFrame {
 		tablePanel.setData(dbForm);
 		formPanel = new FormPanel();
 		
+		tablePanel.setPersonTableListener(new PersonTableListener() {
+			
+			@Override
+			public void rowDeleted(int row) {
+				System.out.println(row);
+				controller.deletePerson(row);
+				dbForm.remove(row);
+				
+			}
+		});
+		
 		toolbarPanel = new ToolBarPanel();
 		
 		formPanel.setformEventListener(new IformEvent<FormEvent>() {
