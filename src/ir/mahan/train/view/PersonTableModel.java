@@ -2,6 +2,7 @@ package ir.mahan.train.view;
 
 import ir.mahan.train.model.AgeCategory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -24,7 +25,7 @@ public class PersonTableModel extends AbstractTableModel {
 	public int getColumnCount() {
 		return colname.length;
 	}
-//
+	
 	@Override
 	public int getRowCount() {
 		return db.size();
