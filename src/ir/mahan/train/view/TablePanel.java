@@ -1,5 +1,7 @@
 package ir.mahan.train.view;
 
+import ir.mahan.train.controller.Controller;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -34,6 +36,10 @@ public class TablePanel extends JPanel {
 		
 		JMenuItem removeItem = new JMenuItem("Delete row");
 		popupMenu.add(removeItem);
+		JMenuItem refreshItem = new JMenuItem("Refresh");
+		popupMenu.add(refreshItem);
+		JMenuItem saveItem = new JMenuItem("Save");
+		popupMenu.add(saveItem);
 		
 		setLayout(new BorderLayout());
 		add(new JScrollPane(table), BorderLayout.CENTER);
@@ -52,15 +58,38 @@ public class TablePanel extends JPanel {
 			}
 		});
 		
+		refreshItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				if (personTableListener != null) {
+					personTableListener.refresh();
+					personTableModel.fireTableDataChanged();
+				}
+			}
+		});
+		
+		
+		saveItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int row = table.getSelectedRow();
+				if (personTableListener != null) {
+					personTableListener.save(row);
+					personTableModel.fireTableDataChanged();
+				}
+				
+			}
+		});
 		//TODO refresh and save
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				int row = table.rowAtPoint(e.getPoint());
 				table.getSelectionModel().setSelectionInterval(row, row);
-//				System.out.println(row);
 				if (e.getButton() == MouseEvent.BUTTON3) {
-					popupMenu.show(table, e.getX(), getY());
+					popupMenu.show(table, e.getX(), e.getY());
 				}
 			}
 		});
@@ -75,8 +104,15 @@ public class TablePanel extends JPanel {
 		personTableModel.fireTableDataChanged();
 	}
 
+	
+	public void clear(){
+		table.getModel();
+	}
 
 	public void setPersonTableListener(PersonTableListener personTableListener) {
 		this.personTableListener = personTableListener;
 	}
+	
+
+
 }

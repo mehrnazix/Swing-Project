@@ -9,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
 public class PersonTableModel extends AbstractTableModel {
 
 	private List<FormEvent> db;
-	private String[] colname = {"Id","FirstName", "LastName", "Role", "Age", "Gender", "City"};
+	private String[] colname = {"Id","FirstName", "LastName", "Role", "Age", "Gender", "City", "Salary"};
 	
 	@Override
 	public String getColumnName (int column){
@@ -24,7 +24,7 @@ public class PersonTableModel extends AbstractTableModel {
 	public int getColumnCount() {
 		return colname.length;
 	}
-
+//
 	@Override
 	public int getRowCount() {
 		return db.size();
@@ -48,7 +48,9 @@ public class PersonTableModel extends AbstractTableModel {
 			return formEvent.gender;
 		case 6:
 			return formEvent.city;
-		}
+		case 7:
+			return formEvent.salary;
+	}
 		return null;
 	}
 	
@@ -58,10 +60,6 @@ public class PersonTableModel extends AbstractTableModel {
 		case 1:
 			return true;
 		case 2:
-			return true;
-		case 4:
-			return true;
-		case 5:
 			return true;
 		}
 		return false;
@@ -73,17 +71,12 @@ public class PersonTableModel extends AbstractTableModel {
 		if (db == null) {
 			return;
 		}
-		
 		FormEvent p = (FormEvent)db.get(row);
 		switch (col) {
 		case 1:
 			p.setFirstName((String)value);
 		case 2:
 			p.setLastName((String)value);
-		case 3:
-			p.setAge((AgeCategory)value);
-		default:
-			return;
 		}
 	}
 

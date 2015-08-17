@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -45,7 +46,7 @@ public class DataBase {
 	}
 
 	public void saveToFile(File file) throws IOException {
-		FileOutputStream fos = new FileOutputStream(file + ".per");
+		FileOutputStream fos = new FileOutputStream(file);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		Person[] persons = people.toArray(new Person[people.size()]);
 		oos.writeObject(persons);
@@ -69,8 +70,15 @@ public class DataBase {
 	}
 
 	//TODO also delete from database
-	public void deletePerson(int index) {
+	public void deletePerson(int index) throws SQLException {
+		int id ;
+		id = people.get(index).getId();
 		people.remove(index);
+		String removeQuery = "delete from g2.person where id=?";
+		PreparedStatement preparedStatement = con.prepareStatement(removeQuery);
+		preparedStatement.setInt(1,id);
+		preparedStatement.executeUpdate();
+		
 	}
 
 	public void setPerson(ArrayList<Person> person) {
@@ -93,7 +101,7 @@ public class DataBase {
 		}
 		String connectionURL = "jdbc:sqlserver://swsql.mahanair.aero;user=sa;password=123;database=javaTraining";
 		con = DriverManager.getConnection(connectionURL);
-//		System.out.println("connected");
+		System.out.println("connected");
 	}
 
 	public boolean checkUserExist(int id) throws SQLException {
@@ -102,18 +110,17 @@ public class DataBase {
 		preparedStatement.setInt(1, id);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			int id2 = resultSet.getInt(1);
-			if (id2 == 0) {
-				return true;
+			int result = resultSet.getInt(1);
+			if (result == 0) {
+				return false;
 			}
 		}
-		return false;
+		return true;
 		
 	}
 	
-	public boolean chekLoginValidity(String username, String password) throws Exception {
+	public boolean chekLoginValidity(String username, String password) throws SQLException {
 		
-		this.connect();
 		
 		String getData = "select * from g2.users";
 		PreparedStatement preparedStatement = con.prepareStatement(getData);
@@ -142,13 +149,18 @@ public class DataBase {
 	}
 
 	public void saveToDb() throws Exception {		
+		
 		String insertTableSql = "insert into G2.Person "
 				+ "(ID, FirstName, LastName, Gender, Age, Category, City, Sport, IsEmployee, Salary)"
 				+ " values (?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = con.prepareStatement(insertTableSql);
 
+		String updateDbQuery = "UPDATE G2.Person SET FirstName='?', LastName='?' WHERE id=?";
+		PreparedStatement preparedStatementUpdate = con.prepareStatement(updateDbQuery);
+		
+		
 		for (Person p : people) {
-			if (this.checkUserExist(p.getId())) {
+			if (!this.checkUserExist(p.getId())) {
 				preparedStatement.setInt(1, p.getId());
 				preparedStatement.setString(2, p.getFirstName());
 				preparedStatement.setString(3, p.getLastName());
@@ -162,9 +174,13 @@ public class DataBase {
 
 				preparedStatement.executeUpdate();
 			}
-			else {
-				throw new Exception("This user already is in database!");
-			}
+//			else {
+//				preparedStatement.setString(1, p.getFirstName());
+//				preparedStatement.setString(2, p.getLastName());
+//				preparedStatement.setInt(3, p.getId());
+//				preparedStatementUpdate.executeUpdate();
+//			}
+
 
 		}
 		preparedStatement.close();
@@ -195,6 +211,20 @@ public class DataBase {
 			people.add(person);
 		}
 		return people;
+	}
+
+	public void editDb(int row) throws SQLException {
+		String editQuery = "UPDATE G2.Person SET FirstName='?', LastName='?' WHERE id=?";
+		PreparedStatement preparedStatementEdit = con.prepareStatement(editQuery);
+		int id = people.get(row).getId();
+		String firstName = people.get(row).getFirstName();
+		String lastName = people.get(row).getLastName();
+		
+		System.out.println(id+firstName+lastName);
+		preparedStatementEdit.setString(1, firstName);
+		preparedStatementEdit.setString(2, lastName);
+		preparedStatementEdit.setInt(3, id);
+		preparedStatementEdit.executeUpdate();
 	}
 
 }

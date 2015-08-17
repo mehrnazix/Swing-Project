@@ -31,5 +31,9 @@ public class TextPanel extends JPanel {
 	public void setText(String str) {
 		this.textArea.append(str + "\n");
 	}
+	
+	public void getText() {
+		this.textArea.getText();
+	}
 
 }

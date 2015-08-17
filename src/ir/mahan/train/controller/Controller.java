@@ -120,7 +120,12 @@ public class Controller {
 		db.disConnect();
 	}
 
-	public void deletePerson(int row) {
+	public void deletePerson(int row) throws SQLException {
 		db.deletePerson(row);
+	}
+
+	public void editPerson(int row) throws SQLException {
+		db.editDb(row);
+		
 	}
 }

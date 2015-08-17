@@ -22,15 +22,22 @@ public class LoginFrame extends JFrame{
 	public JLabel userNamelbl,passwordlbl;
 	public JTextField userNametf;
 	public JButton loginBtn;
-	public JTextField passwordFd;
+	public JPasswordField passwordFd;
 	public Controller controller;
 	public JPasswordField pf;
 	public static String user = "";
+	
 	
 	public LoginFrame(String title) {
 		super(title);
 		setLocationRelativeTo(null);
 		controller = new Controller();
+		try {
+			controller.connectToDb();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(LoginFrame.this, e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
 		setView();
 		addComponent();
 		setLayout();
@@ -49,7 +56,7 @@ public class LoginFrame extends JFrame{
 		userNamelbl = new JLabel("Username:");
 		passwordlbl = new JLabel("Password:");
 		userNametf = new JTextField();
-		passwordFd = new JTextField();
+		passwordFd = new JPasswordField();
 		loginBtn = new JButton("Login");
 		
 		jPanel.getRootPane().setDefaultButton(loginBtn);
@@ -100,9 +107,14 @@ public class LoginFrame extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			JButton btn = (JButton) event.getSource();
+			String password = "";
 			if (btn == loginBtn) {
 				String username = userNametf.getText();
-				String password = passwordFd.getText();
+				char[] passwordarr = passwordFd.getPassword();
+				for (int i = 0; i < passwordarr.length; i++) {
+					password += passwordarr[i];
+				}
+
 				try {
 					if (controller.checkUser(username, password)) {
 						user += username;
@@ -116,8 +128,8 @@ public class LoginFrame extends JFrame{
 					}
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(LoginFrame.this, "Database Error", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}

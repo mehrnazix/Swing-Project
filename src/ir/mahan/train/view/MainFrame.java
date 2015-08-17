@@ -44,7 +44,6 @@ public class MainFrame extends JFrame {
 	private Controller controller;
 	private List<FormEvent> fe;
 	private LoginFrame loginFrame;
-	
 
 	public MainFrame(String title) {
 		super(title);
@@ -52,6 +51,12 @@ public class MainFrame extends JFrame {
 		setView();
 		addComponent();
 		this.controller = new Controller();
+		try {
+			controller.connectToDb();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(MainFrame.this, e.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	private JMenuBar addMenuBar() {
@@ -83,7 +88,6 @@ public class MainFrame extends JFrame {
 		windowBar = new JMenu("Window");
 		windowBar.add(showMenu);
 
-
 		fileMenuBar.add(fileMenu);
 		fileMenuBar.add(windowBar);
 
@@ -101,6 +105,26 @@ public class MainFrame extends JFrame {
 
 		return fileMenuBar;
 	}
+
+	private void refreshData() {
+		try {
+			dbForm.clear();
+			fe = new ArrayList<>();
+			fe = controller.loadFromDb();
+			for (FormEvent formEvent : fe) {
+				textPanel.setText(formEvent.ToString(";"));
+				dbForm.add(formEvent);
+				FormEvent.count = formEvent.getId();
+			}
+			tablePanel.refresh();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(MainFrame.this,
+					e.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(MainFrame.this,
+					e.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 	
 	private void addComponent() {
 		textPanel = new TextPanel();
@@ -108,20 +132,46 @@ public class MainFrame extends JFrame {
 		dbForm = new ArrayList<FormEvent>();
 		tablePanel.setData(dbForm);
 		formPanel = new FormPanel();
+
+		
+
 		
 		tablePanel.setPersonTableListener(new PersonTableListener() {
-			
+
 			@Override
 			public void rowDeleted(int row) {
-				System.out.println(row);
-				controller.deletePerson(row);
+				try {
+					controller.deletePerson(row);
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
 				dbForm.remove(row);
+
+			}
+
+
+			
+			@Override
+			public void refresh() {
+				refreshData();
+			}
+
+			@Override
+			public void save(int row) {
 				
+				try {
+					controller.editPerson(row);
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+
 			}
 		});
-		
+
 		toolbarPanel = new ToolBarPanel();
-		
+
 		formPanel.setformEventListener(new IformEvent<FormEvent>() {
 			public void formEventEmitted(FormEvent formEvent) {
 				if (Validation.userValidation(formEvent)) {
@@ -137,70 +187,44 @@ public class MainFrame extends JFrame {
 			}
 
 		});
-		
-		toolbarPanel.setToolbarListener(new ItoolbarListener() {
-			
 
+		toolbarPanel.setToolbarListener(new ItoolbarListener() {
 			@Override
 			public void refreshEventOccured() {
-				
-					try {
-						controller.connectToDb();
-						fe = new ArrayList<>();
-						fe = controller.loadFromDb();
-						for (FormEvent formEvent : fe) {
-							textPanel.setText(formEvent.ToString(";"));
-							dbForm.add(formEvent);
-							FormEvent.count = formEvent.getId();
-							
-						}
-//						controller.disconnectFromDb();
-					} catch (SQLException e) {
-						JOptionPane.showMessageDialog(MainFrame.this, e.getMessage()
-								, "error", JOptionPane.ERROR_MESSAGE);
-//						e.printStackTrace();
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(MainFrame.this, "Can not connect database"
-								, "error", JOptionPane.ERROR_MESSAGE);
-//						e.printStackTrace();
-					}
-
-				
+				refreshData();
 			}
 
 			@Override
 			public void saveEventOccured() {
 
-						try {
-							controller.connectToDb();
-						} catch (Exception e) {
-							JOptionPane.showMessageDialog(MainFrame.this,
+				try {
+					controller.connectToDb();
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(MainFrame.this,
 							e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-						}
-						try {
-							controller.saveToDb();
-							JOptionPane.showMessageDialog(MainFrame.this, "Successfuly saved to database", "Success", JOptionPane.INFORMATION_MESSAGE);
-						} catch (Exception e) {
-							JOptionPane.showMessageDialog(MainFrame.this,
+				}
+				try {
+					controller.saveToDb();
+					JOptionPane.showMessageDialog(MainFrame.this,
+							"Successfuly saved to database", "Success",
+							JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(MainFrame.this,
 							e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-						}
+				}
 
-					
-
-				
 			}
-
 
 		});
 		tabbedpane = new JTabbedPane();
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel,
 				tabbedpane);
-		tabbedpane.add("Text Area", textPanel);
+		// tabbedpane.add("Text Area", textPanel);
 		tabbedpane.add("Person DB", tablePanel);
 		splitPane.setOneTouchExpandable(true);
 		this.add(splitPane, BorderLayout.CENTER);
 		setJMenuBar(addMenuBar());
-		
+
 		this.add(toolbarPanel, BorderLayout.PAGE_START);
 	}
 
@@ -222,63 +246,54 @@ public class MainFrame extends JFrame {
 			if (menuItem == exitMenuItem) {
 				System.exit(0);
 			} else if (menuItem == exportMenuItem) {
-//				int result = filechooser.showSaveDialog(null);
-
-//				 FileManager fileManager = new FileManager();
-//				 try {
-//				 fileManager.exportToFile(dbForm);
-//				 } catch (IOException e) {
-//				 e.printStackTrace();
-//				 }
 				if (filechooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
 					File getSelectedFile = filechooser.getSelectedFile();
-						try {
-							controller.savePerson(getSelectedFile);
-						} catch (IOException e) {					
-							JOptionPane.showMessageDialog(MainFrame.this,
-									"File can not be save in this location", "Error",
-									JOptionPane.ERROR_MESSAGE);
-						}
+					try {
+						controller.savePerson(getSelectedFile);
+					} catch (IOException e) {
+						JOptionPane.showMessageDialog(MainFrame.this,
+								"File can not be save in this location",
+								"Error", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			} else if (menuItem == importMenuItem) {
-				
+
 				if (filechooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
 					File getSelectedFile = filechooser.getSelectedFile();
-					
-						fe = new ArrayList();
-						try {
-							fe = controller.loadPerson(getSelectedFile);
-						} catch (ClassNotFoundException e) {
-							JOptionPane.showMessageDialog(MainFrame.this,
-									e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-						} catch (IOException e) {
-							JOptionPane.showMessageDialog(MainFrame.this,
-							e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-						}
-//						FormEvent.count = fe.size(); 
-						for (FormEvent f : fe) {
-//							if () {
-//								
-//							}
-							textPanel.setText(f.ToString("/"));
-							dbForm.add(f);
-						}
-						tablePanel.refresh();
-					
+
+					fe = new ArrayList();
+					try {
+						fe = controller.loadPerson(getSelectedFile);
+					} catch (ClassNotFoundException e) {
+						JOptionPane.showMessageDialog(MainFrame.this,
+								e.getMessage(), "Error",
+								JOptionPane.ERROR_MESSAGE);
+					} catch (IOException e) {
+						JOptionPane.showMessageDialog(MainFrame.this,
+								e.getMessage(), "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					// FormEvent.count = fe.size();
+					for (FormEvent f : fe) {
+						textPanel.setText(f.ToString("/"));
+						dbForm.add(f);
+					}
+					tablePanel.refresh();
+
 				}
-//				FileManager fileManager = new FileManager();
-//				try {
-//					List<FormEvent> userList = fileManager.importFromFile();
-//					if (userList != null) {
-//						for (FormEvent u : userList) {
-//							textPanel.setText(u.ToString("/"));
-//							dbForm.add(u);
-//						}
-//						tablePanel.refresh();
-//					}
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
+				// FileManager fileManager = new FileManager();
+				// try {
+				// List<FormEvent> userList = fileManager.importFromFile();
+				// if (userList != null) {
+				// for (FormEvent u : userList) {
+				// textPanel.setText(u.ToString("/"));
+				// dbForm.add(u);
+				// }
+				// tablePanel.refresh();
+				// }
+				// } catch (IOException e) {
+				// e.printStackTrace();
+				// }
 			}
 
 		}
