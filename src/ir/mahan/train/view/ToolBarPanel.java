@@ -1,5 +1,7 @@
 package ir.mahan.train.view;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -7,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JToolBar;
 
 public class ToolBarPanel extends JToolBar implements ActionListener {
@@ -14,6 +17,7 @@ public class ToolBarPanel extends JToolBar implements ActionListener {
 	public JButton saveBtn,refreshBtn;
 	public ItoolbarListener itoolbarListenr;
 	public JLabel userlbl;
+	public JSeparator separator;
 	
 	public ToolBarPanel() {
 		
@@ -21,8 +25,8 @@ public class ToolBarPanel extends JToolBar implements ActionListener {
 		setBorder(BorderFactory.createEtchedBorder());
 		setFloatable(false);
 		
-		userlbl = new JLabel("    Welcome dear user, " +  LoginFrame.user);
-		
+		userlbl = new JLabel("    Welcome dear user << " +  LoginFrame.user+" >>");
+		separator = new JSeparator();
 		
 		saveBtn = new JButton();
 		refreshBtn = new JButton();
@@ -39,7 +43,9 @@ public class ToolBarPanel extends JToolBar implements ActionListener {
 		add(saveBtn);
 		addSeparator();
 		add(refreshBtn);
+		add(separator);
 		add(userlbl);
+		
 	}
 
 	public void setToolbarListener(ItoolbarListener toolbarListener) {

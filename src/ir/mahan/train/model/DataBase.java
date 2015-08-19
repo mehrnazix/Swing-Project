@@ -1,6 +1,8 @@
 package ir.mahan.train.model;
 
 
+import ir.mahan.train.controller.Controller;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -31,6 +33,7 @@ public class DataBase {
 	private String pass;
 	private Properties properties;
 	private InputStream input;
+	
 
 	public DataBase() {
 		this.people = new ArrayList<Person>();
@@ -112,10 +115,10 @@ public class DataBase {
 		while (resultSet.next()) {
 			int result = resultSet.getInt(1);
 			if (result == 0) {
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 		
 	}
 	
@@ -160,7 +163,7 @@ public class DataBase {
 		
 		
 		for (Person p : people) {
-			if (!this.checkUserExist(p.getId())) {
+			if (this.checkUserExist(p.getId())) {
 				preparedStatement.setInt(1, p.getId());
 				preparedStatement.setString(2, p.getFirstName());
 				preparedStatement.setString(3, p.getLastName());
@@ -175,9 +178,13 @@ public class DataBase {
 				preparedStatement.executeUpdate();
 			}
 //			else {
-//				preparedStatement.setString(1, p.getFirstName());
-//				preparedStatement.setString(2, p.getLastName());
-//				preparedStatement.setInt(3, p.getId());
+//					int row =p.getId();
+//					String firstName = p.getFirstName();
+//					String lastName = p.getLastName();
+//				editDb(row, firstName, lastName);
+//				preparedStatementUpdate.setString(1, p.getFirstName());
+//				preparedStatementUpdate.setString(2, p.getLastName());
+//				preparedStatementUpdate.setInt(3, p.getId());
 //				preparedStatementUpdate.executeUpdate();
 //			}
 
@@ -213,17 +220,11 @@ public class DataBase {
 		return people;
 	}
 
-	public void editDb(int row) throws SQLException {
-		String editQuery = "UPDATE G2.Person SET FirstName='?', LastName='?' WHERE id=?";
-		PreparedStatement preparedStatementEdit = con.prepareStatement(editQuery);
-		int id = people.get(row).getId();
-		String firstName = people.get(row).getFirstName();
-		String lastName = people.get(row).getLastName();
+	public void editDb(int row , String firstName , String lastName) throws SQLException {
 		
-		System.out.println(id+firstName+lastName);
-		preparedStatementEdit.setString(1, firstName);
-		preparedStatementEdit.setString(2, lastName);
-		preparedStatementEdit.setInt(3, id);
+		int id = people.get(row).getId();
+		String editQuery = "UPDATE G2.Person SET FirstName='"+firstName+" ', LastName='" + lastName+"' WHERE id=" +id+";";
+		PreparedStatement preparedStatementEdit = con.prepareStatement(editQuery);
 		preparedStatementEdit.executeUpdate();
 	}
 

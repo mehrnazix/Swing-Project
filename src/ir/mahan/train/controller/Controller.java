@@ -112,6 +112,10 @@ public class Controller {
 	}
 
 
+	public List<FormEvent> getFormEvents() {
+		return formEvents;
+	}
+
 	public void connectToDb() throws Exception {
 		db.connect();
 	}
@@ -125,7 +129,17 @@ public class Controller {
 	}
 
 	public void editPerson(int row) throws SQLException {
-		db.editDb(row);
+		String firstName = getFormEvents().get(row).firstName;
+		String lastName = getFormEvents().get(row).lastName;
+		db.editDb(row , firstName , lastName);
 		
+	}
+	
+	public void  checkUserExist(int id) {
+		try {
+			db.checkUserExist(id);
+		} catch (SQLException e) {
+			System.err.println("checkUserExist Error");
+		}
 	}
 }

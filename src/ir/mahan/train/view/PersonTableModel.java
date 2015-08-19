@@ -76,8 +76,11 @@ public class PersonTableModel extends AbstractTableModel {
 		switch (col) {
 		case 1:
 			p.setFirstName((String)value);
+		
+			break;
 		case 2:
 			p.setLastName((String)value);
+			break;
 		}
 	}
 
