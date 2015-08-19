@@ -116,8 +116,14 @@ public class Controller {
 		return formEvents;
 	}
 
-	public void connectToDb() throws Exception {
+	public boolean connectToDb() throws Exception {
 		db.connect();
+		if (db.connect()){
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public void disconnectFromDb() throws Exception {

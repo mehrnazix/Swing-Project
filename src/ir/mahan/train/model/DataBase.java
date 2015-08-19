@@ -22,6 +22,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
+
 
 
 public class DataBase {
@@ -93,19 +95,42 @@ public class DataBase {
 		return people;
 	}
 
-	public void connect() throws Exception {
+	public boolean connect()  {
+		
+		boolean flag;
 		if (con != null) {
-			return;
+			return true;
 		}
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			
 		} catch (ClassNotFoundException e) {
-			throw new Exception("Driver not found");
+			try {
+				throw new Exception("Driver not found");
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, e.getMessage(),
+						"Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		String connectionURL = "jdbc:sqlserver://swsql.mahanair.aero;user=sa;password=123;database=javaTraining";
-		con = DriverManager.getConnection(connectionURL);
+		try {
+			con = DriverManager.getConnection(connectionURL);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
 		System.out.println("connected");
+		
+		if (con == null){
+			flag = false;
+		}
+		else {
+			flag = true;
+		}
+		return flag;
 	}
+	
+	
 
 	public boolean checkUserExist(int id) throws SQLException {
 		String getQuery = "select count(*) from g2.person where id=?";

@@ -25,6 +25,7 @@ public class LoginFrame extends JFrame{
 	public JPasswordField passwordFd;
 	public Controller controller;
 	public JPasswordField pf;
+	public JLabel connectionLabel;
 	public static String user = "";
 	
 	
@@ -41,11 +42,19 @@ public class LoginFrame extends JFrame{
 		setView();
 		addComponent();
 		setLayout();
+		try {
+			if (controller.connectToDb()) {
+				connectionLabel.setText("Connected To Data Base");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
 	public void setView() {
-		this.setSize(300, 140);
+		this.setSize(300, 170);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
@@ -58,8 +67,9 @@ public class LoginFrame extends JFrame{
 		userNametf = new JTextField();
 		passwordFd = new JPasswordField();
 		loginBtn = new JButton("Login");
-		
+		connectionLabel = new JLabel();
 		jPanel.getRootPane().setDefaultButton(loginBtn);
+		
 //		loginBtn.setMnemonic(KeyEvent.VK_ENTER);
 	}
 	
@@ -97,6 +107,12 @@ public class LoginFrame extends JFrame{
 		gc.weighty = 14;
 		gc.anchor = GridBagConstraints.NORTH;
 		jPanel.add(loginBtn, gc);
+		
+		gc.gridy = 3;
+		gc.gridx = 0;
+		gc.weighty = 1;
+		gc.anchor = GridBagConstraints.NORTH;
+		jPanel.add(connectionLabel, gc);
 
 		loginBtn.addActionListener(new LoginBtnClick());
 	}
