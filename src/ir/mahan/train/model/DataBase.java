@@ -132,18 +132,26 @@ public class DataBase {
 	
 	
 
-	public boolean checkUserExist(int id) throws SQLException {
-		String getQuery = "select count(*) from g2.person where id=?";
-		PreparedStatement preparedStatement = con.prepareStatement(getQuery);
-		preparedStatement.setInt(1, id);
+	public boolean checkUserExist(int id , String firstName , String lastName) throws SQLException {
+		
+		PreparedStatement preparedStatement = con.prepareStatement("select count(*) from G2.Person where ID= "+id);
 		ResultSet resultSet = preparedStatement.executeQuery();
-		while (resultSet.next()) {
-			int result = resultSet.getInt(1);
-			if (result == 0) {
-				return true;
-			}
+		
+		
+		resultSet.next();
+		int count = resultSet.getInt(1);
+		
+		if (count == 0) {
+			return false;
 		}
-		return false;
+		if (count > 1)
+		{
+			return true;
+		}
+		System.out.println(count);
+		
+		return true;
+		
 		
 	}
 	
@@ -176,19 +184,19 @@ public class DataBase {
 		}
 	}
 
-	public void saveToDb() throws Exception {		
+	public void saveToDb(List<Person> people) throws Exception {
+		
 		
 		String insertTableSql = "insert into G2.Person "
 				+ "(ID, FirstName, LastName, Gender, Age, Category, City, Sport, IsEmployee, Salary)"
 				+ " values (?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedStatement = con.prepareStatement(insertTableSql);
 
-		String updateDbQuery = "UPDATE G2.Person SET FirstName='?', LastName='?' WHERE id=?";
-		PreparedStatement preparedStatementUpdate = con.prepareStatement(updateDbQuery);
+		
 		
 		
 		for (Person p : people) {
-			if (this.checkUserExist(p.getId())) {
+			if (!this.checkUserExist(p.getId() , p.getFirstName() , p.getLastName())) {
 				preparedStatement.setInt(1, p.getId());
 				preparedStatement.setString(2, p.getFirstName());
 				preparedStatement.setString(3, p.getLastName());
@@ -202,16 +210,22 @@ public class DataBase {
 
 				preparedStatement.executeUpdate();
 			}
-//			else {
+			else {
 //					int row =p.getId();
 //					String firstName = p.getFirstName();
 //					String lastName = p.getLastName();
 //				editDb(row, firstName, lastName);
+			
+			String updateDbQuery = "UPDATE G2.Person SET FirstName='"
+			+p.getFirstName()+"', LastName='" + p.getLastName()+"' WHERE id="+p.getId()+";";
+			PreparedStatement preparedStatementUpdate = con.prepareStatement(updateDbQuery);
+			
+			
 //				preparedStatementUpdate.setString(1, p.getFirstName());
 //				preparedStatementUpdate.setString(2, p.getLastName());
 //				preparedStatementUpdate.setInt(3, p.getId());
-//				preparedStatementUpdate.executeUpdate();
-//			}
+				preparedStatementUpdate.executeUpdate();
+			}
 
 
 		}

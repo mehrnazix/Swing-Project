@@ -203,13 +203,14 @@ public class MainFrame extends JFrame {
 							e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				try {
-					controller.saveToDb();
+					controller.saveToDb(dbForm);
 					JOptionPane.showMessageDialog(MainFrame.this,
 							"Successfuly saved to database", "Success",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(MainFrame.this,
-							e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+//					JOptionPane.showMessageDialog(MainFrame.this,
+//							"Can not save to DB", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}

@@ -20,22 +20,30 @@ import ir.mahan.train.view.FormEvent;
 public class Controller {
 	DataBase db;
 	private List<Person> people;
+	private List<Person> peoples;
 	private List<FormEvent> formEvents;
 	public String username;
 
 	
 	public Controller() {
 		this.db = new DataBase();
+		
 	}
 
-	public void saveToDb() throws Exception  {
-		db.saveToDb();
+	public void saveToDb(List<FormEvent> dbForm) throws Exception  {
+		peoples = new ArrayList<Person>();
+		for (int i = 0; i < dbForm.size(); i++) {
+			peoples.add(convertFormEventToPerson(dbForm.get(i)));
+		}
+		
+		db.saveToDb(peoples);
 	}
 
 	public List<FormEvent> loadFromDb() throws SQLException {
 		people = db.loadFromDb();
 		formEvents = new ArrayList<FormEvent>();
-		for (Person p : people) {
+		for (Person p : people)
+		{
 			FormEvent e = convertPersonToFormEvent(p);
 			formEvents.add(e);
 		}
@@ -141,9 +149,9 @@ public class Controller {
 		
 	}
 	
-	public void  checkUserExist(int id) {
+	public void  checkUserExist(int id , String firstName , String lastName) {
 		try {
-			db.checkUserExist(id);
+			db.checkUserExist( id , firstName , lastName);
 		} catch (SQLException e) {
 			System.err.println("checkUserExist Error");
 		}
