@@ -5,15 +5,18 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import ir.mahan.train.controller.Controller;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 public class LoginPanel extends JPanel {
 	public JPanel jPanel;
@@ -32,22 +35,31 @@ public class LoginPanel extends JPanel {
 	}
 
 	public void addComponent() {
-//		controller = new Controller();
-//		try {
-//			controller.connectToDb();
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		userNamelbl = new JLabel("Username:");
 		passwordlbl = new JLabel("Password:");
 		userNametf = new JTextField();
+		
+		userNametf.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				passwordFd.requestFocusInWindow();
+				
+			}
+		});
+		
 		passwordFd = new JPasswordField();
 		loginBtn = new JButton("Login");
+		passwordFd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+			}
+		});
+		
 		connectionLabel = new JLabel();
-		// this.getRootPane().setDefaultButton(loginBtn);
-
-		// loginBtn.setMnemonic(KeyEvent.VK_ENTER);
 	}
 
 	public void setLblText(String text) {
@@ -113,9 +125,15 @@ public class LoginPanel extends JPanel {
 					for (int i = 0; i < passwordarr.length; i++) {
 						password += passwordarr[i];
 					}
+					if (username.isEmpty()) {
+						JOptionPane.showMessageDialog(null,"usename can not be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					else if (password.isEmpty()) {
+						JOptionPane.showMessageDialog(null,"password can not be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+					} else {
 					iLoginListener.userInfoEmit(username, password);
+					}
 				}
-				// System.out.println(username + password);
 			}
 
 		}
