@@ -280,19 +280,7 @@ public class MainFrame extends JFrame {
 					tablePanel.refresh();
 
 				}
-				// FileManager fileManager = new FileManager();
-				// try {
-				// List<FormEvent> userList = fileManager.importFromFile();
-				// if (userList != null) {
-				// for (FormEvent u : userList) {
-				// textPanel.setText(u.ToString("/"));
-				// dbForm.add(u);
-				// }
-				// tablePanel.refresh();
-				// }
-				// } catch (IOException e) {
-				// e.printStackTrace();
-				// }
+
 			}
 
 		}
