@@ -43,7 +43,6 @@ public class MainFrame extends JFrame {
 	private ToolBarPanel toolbarPanel;
 	private Controller controller;
 	private List<FormEvent> fe;
-	private LoginFrame loginFrame;
 
 	public MainFrame(String title) {
 		super(title);

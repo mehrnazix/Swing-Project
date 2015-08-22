@@ -221,7 +221,7 @@ public class DataBase {
 	
 	public List<Person> loadFromDb() throws SQLException {
 		
-		String loadData = "select * from g2.person";
+		String loadData = "select * from g2.Person order by ID";
 		PreparedStatement preparedStatement = con.prepareStatement(loadData);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		people.clear();

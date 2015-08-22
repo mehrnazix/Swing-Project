@@ -109,7 +109,7 @@ public class LoginFrame extends JFrame{
 		jPanel.add(loginBtn, gc);
 		
 		gc.gridy = 3;
-		gc.gridx = 0;
+		gc.gridx = 1;
 		gc.weighty = 1;
 		gc.anchor = GridBagConstraints.NORTH;
 		jPanel.add(connectionLabel, gc);
