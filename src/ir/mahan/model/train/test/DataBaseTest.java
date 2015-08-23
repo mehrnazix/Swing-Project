@@ -1,13 +1,9 @@
 package ir.mahan.model.train.test;
 
 import static org.junit.Assert.*;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import ir.mahan.train.model.DataBase;
 import ir.mahan.train.model.Person;
-
 import org.junit.Before;
 import org.junit.Test;
 

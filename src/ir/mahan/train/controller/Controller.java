@@ -1,14 +1,10 @@
 package ir.mahan.train.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import ir.mahan.train.model.AgeCategory;
 import ir.mahan.train.model.DataBase;
 import ir.mahan.train.model.EmpCategory;
@@ -64,8 +60,6 @@ public class Controller {
 	}
 
 	public void getPerson(Person person) {
-
-		FormEvent formEvent = convertPersonToFormEvent(person);
 		db.getPeopleList();
 	}
 	

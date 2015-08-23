@@ -1,13 +1,9 @@
 package ir.mahan.train.model;
 
-
-import ir.mahan.train.controller.Controller;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
@@ -15,13 +11,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-
 import javax.swing.JOptionPane;
 
 
@@ -30,11 +23,6 @@ public class DataBase {
 	private List<Person> people;
 
 	Connection con;
-	private int port;
-	private String user;
-	private String pass;
-	private Properties properties;
-	private InputStream input;
 	
 
 	public DataBase() {
@@ -46,7 +34,8 @@ public class DataBase {
 			FileInputStream input = new FileInputStream(X);
 			properties.load(input);
 		} catch (Exception e) {
-			// TODO: handle exception
+			JOptionPane.showMessageDialog(null, e.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -74,7 +63,7 @@ public class DataBase {
 		people.add(person);
 	}
 
-	//TODO also delete from database
+	
 	public void deletePerson(int index) throws SQLException {
 		int id ;
 		id = people.get(index).getId();
@@ -210,20 +199,10 @@ public class DataBase {
 				preparedStatement.executeUpdate();
 			}
 			else {
-//					int row =p.getId();
-//					String firstName = p.getFirstName();
-//					String lastName = p.getLastName();
-//				editDb(row, firstName, lastName);
-			
 			String updateDbQuery = "UPDATE G2.Person SET FirstName='"
 			+p.getFirstName()+"', LastName='" + p.getLastName()+"' WHERE id="+p.getId()+";";
 			PreparedStatement preparedStatementUpdate = con.prepareStatement(updateDbQuery);
-			
-			
-//				preparedStatementUpdate.setString(1, p.getFirstName());
-//				preparedStatementUpdate.setString(2, p.getLastName());
-//				preparedStatementUpdate.setInt(3, p.getId());
-				preparedStatementUpdate.executeUpdate();
+			preparedStatementUpdate.executeUpdate();
 			}
 
 
