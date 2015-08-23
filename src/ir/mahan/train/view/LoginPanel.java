@@ -1,5 +1,6 @@
 package ir.mahan.train.view;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,6 +10,7 @@ import java.awt.event.KeyEvent;
 
 import ir.mahan.train.controller.Controller;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -28,6 +30,7 @@ public class LoginPanel extends JPanel {
 	public JLabel connectionLabel;
 	public Controller controller;
 	public ILoginListener iLoginListener;
+	private JLabel emptyUsernameStar, emptyPasswordStar;
 
 	public LoginPanel() {
 		addComponent();
@@ -38,7 +41,10 @@ public class LoginPanel extends JPanel {
 		userNamelbl = new JLabel("Username:");
 		passwordlbl = new JLabel("Password:");
 		userNametf = new JTextField();
-		
+		emptyPasswordStar = new JLabel("*");
+		emptyUsernameStar = new JLabel("*");
+		emptyPasswordStar.setVisible(false);
+		emptyUsernameStar.setVisible(false);
 		userNametf.addActionListener(new ActionListener() {
 			
 			@Override
@@ -79,6 +85,16 @@ public class LoginPanel extends JPanel {
 
 		gc.insets = new Insets(5, 5, 5, 5);
 
+		gc.weightx = 2;
+		gc.gridy = 0;
+		gc.gridx = 1;
+		this.add(emptyUsernameStar, gc);
+		
+		gc.weightx = 2;
+		gc.gridy = 1;
+		gc.gridx = 1;
+		this.add(emptyPasswordStar, gc);
+		
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.gridy = 0;
 		gc.gridx = 0;
@@ -90,22 +106,22 @@ public class LoginPanel extends JPanel {
 
 		gc.weightx = 2;
 		gc.gridy = 0;
-		gc.gridx = 1;
+		gc.gridx = 2;
 		this.add(userNametf, gc);
 
 		gc.gridy = 1;
-		gc.gridx = 1;
+		gc.gridx = 2;
 		this.add(passwordFd, gc);
 
 		gc.gridy = 2;
-		gc.gridx = 1;
+		gc.gridx = 2;
 		gc.weighty = 14;
 		gc.anchor = GridBagConstraints.NORTH;
 		this.add(loginBtn, gc);
 		loginBtn.addActionListener(new LoginBtnClick());
 
 		gc.gridy = 3;
-		gc.gridx = 1;
+		gc.gridx = 2;
 		gc.weighty = 1;
 		gc.anchor = GridBagConstraints.NORTH;
 		this.add(connectionLabel, gc);
@@ -126,6 +142,8 @@ public class LoginPanel extends JPanel {
 						password += passwordarr[i];
 					}
 					if (username.isEmpty()) {
+						userNametf.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+						emptyUsernameStar.setVisible(true);
 						JOptionPane.showMessageDialog(null,"usename can not be empty!", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					else if (password.isEmpty()) {
