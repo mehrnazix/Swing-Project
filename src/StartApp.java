@@ -10,9 +10,7 @@ public class StartApp {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-//				new MainFrame("My App");
 				new LoginFrame("Login");
-
 			}
 		});
 
