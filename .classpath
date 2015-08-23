@@ -2,7 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/9317182/Documents/junit-4.10.jar"/>
-	<classpathentry kind="lib" path="C:/Users/9317182/Documents/sqljdbc4-3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/reihaneh.heidari/Desktop/jdbc-mssql.jar"/>
+	<classpathentry kind="lib" path="C:/Users/reihaneh.heidari/Desktop/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/reihaneh.heidari/Desktop/sqljdbc4-3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
