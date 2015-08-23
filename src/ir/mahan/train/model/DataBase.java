@@ -148,7 +148,6 @@ public class DataBase {
 		{
 			return true;
 		}
-		System.out.println(count);
 		
 		return true;
 		

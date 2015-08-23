@@ -164,6 +164,9 @@ public class MainFrame extends JFrame {
 				} catch (SQLException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(),
 							"Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}

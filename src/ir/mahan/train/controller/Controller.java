@@ -142,10 +142,8 @@ public class Controller {
 		db.deletePerson(row);
 	}
 
-	public void editPerson(int row) throws SQLException {
-		String firstName = getFormEvents().get(row).firstName;
-		String lastName = getFormEvents().get(row).lastName;
-		db.editDb(row , firstName , lastName);
+	public void editPerson(int row) throws Exception {
+		saveToDb(formEvents);
 		
 	}
 	
