@@ -81,6 +81,7 @@ public class PersonTableModel extends AbstractTableModel {
 		case 2:
 			p.setLastName((String)value);
 			break;
+
 		}
 	}
 
