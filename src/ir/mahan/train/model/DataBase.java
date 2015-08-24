@@ -27,16 +27,16 @@ public class DataBase {
 
 	public DataBase() {
 		this.people = new ArrayList<Person>();
-		Properties properties = new Properties();
-
-		try {
-			File X = new File("DBconfig.properties");
-			FileInputStream input = new FileInputStream(X);
-			properties.load(input);
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(),
-					"Error", JOptionPane.ERROR_MESSAGE);
-		}
+//		Properties properties = new Properties();
+//
+//		try {
+//			File X = new File("DBconfig.properties");
+//			FileInputStream input = new FileInputStream(X);
+//			properties.load(input);
+//		} catch (Exception e) {
+//			JOptionPane.showMessageDialog(null, e.getMessage(),
+//					"Error", JOptionPane.ERROR_MESSAGE);
+//		}
 	}
 
 	public void saveToFile(File file) throws IOException {
