@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+
 import javax.swing.JOptionPane;
 
 
@@ -84,31 +85,18 @@ public class DataBase {
 		return people;
 	}
 
-	public boolean connect()  {
+	public boolean connect() throws SQLException, ClassNotFoundException  {
 		
 		boolean flag;
 		if (con != null) {
 			return true;
 		}
-		try {
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			
-		} catch (ClassNotFoundException e) {
-			try {
-				throw new Exception("Driver not found");
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, e.getMessage(),
-						"Error", JOptionPane.ERROR_MESSAGE);
-			}
-		}
-		String connectionURL = "jdbc:sqlserver://swsql.mahanair.aero;user=sa;password=123;database=javaTraining";
-		try {
+
+		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		String connectionURL = "jdbc:sqlserver://swsql.mahanair.aero;user=sa1;password=123;database=javaTraining";
+		
 			con = DriverManager.getConnection(connectionURL);
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(),
-					"Error", JOptionPane.ERROR_MESSAGE);
-		}
-		System.out.println("connected");
+	
 		
 		if (con == null){
 			flag = false;
