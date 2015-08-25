@@ -188,7 +188,8 @@ public class LoginPanel extends JPanel {
 						passwordFd.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
 						emptyPasswordStar.setVisible(true);
 						JOptionPane.showMessageDialog(null,"Password can not be empty!", "Error", JOptionPane.ERROR_MESSAGE);
-						userNametf.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+						userNametf.setBorder(BorderFactory.createMatteBorder(1,
+								1, 1, 1, Color.BLACK));
 						emptyUsernameStar.setVisible(false);
 					} else {
 					iLoginListener.userInfoEmit(username, password);

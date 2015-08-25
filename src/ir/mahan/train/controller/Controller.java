@@ -16,7 +16,6 @@ import ir.mahan.train.view.FormEvent;
 public class Controller {
 	DataBase db;
 	private List<Person> people;
-	private List<Person> peoples;
 	private List<FormEvent> formEvents;
 	public String username;
 
@@ -27,12 +26,12 @@ public class Controller {
 	}
 
 	public void saveToDb(List<FormEvent> dbForm) throws Exception  {
-		peoples = new ArrayList<Person>();
+		people = new ArrayList<Person>();
 		for (int i = 0; i < dbForm.size(); i++) {
-			peoples.add(convertFormEventToPerson(dbForm.get(i)));
+			people.add(convertFormEventToPerson(dbForm.get(i)));
 		}
 		
-		db.saveToDb(peoples);
+		db.saveToDb(people);
 	}
 
 	public List<FormEvent> loadFromDb() throws SQLException {
@@ -118,14 +117,8 @@ public class Controller {
 		return formEvents;
 	}
 
-	public boolean connectToDb() throws Exception {
+	public void connectToDb() throws Exception {
 		db.connect();
-		if (db.connect()){
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 	
 	public void disconnectFromDb() throws Exception {
@@ -143,7 +136,7 @@ public class Controller {
 	
 	public void  checkUserExist(int id , String firstName , String lastName) {
 		try {
-			db.checkUserExist( id , firstName , lastName);
+			db.checkUserExist(id);
 		} catch (SQLException e) {
 			System.err.println("checkUserExist Error");
 		}

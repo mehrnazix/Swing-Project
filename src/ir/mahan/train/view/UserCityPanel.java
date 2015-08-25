@@ -41,7 +41,7 @@ public class UserCityPanel extends JPanel {
 		
 	}
 	
-    public String getSelectedButtonText() {
+    public String getCity() {
     	String result = "";
     	for( int i=0; i<this.getComponentCount(); i++ ) {
     		  JCheckBox checkBox = (JCheckBox)this.getComponent(i);

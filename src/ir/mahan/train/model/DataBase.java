@@ -83,7 +83,6 @@ public class DataBase {
 
 	public boolean connect() throws SQLException, ClassNotFoundException {
 
-		boolean flag;
 		if (con != null) {
 			return true;
 		}
@@ -94,15 +93,13 @@ public class DataBase {
 		con = DriverManager.getConnection(connectionURL);
 
 		if (con == null) {
-			flag = false;
-		} else {
-			flag = true;
+			return false;
 		}
-		return flag;
+		return true;
+
 	}
 
-	public boolean checkUserExist(int id, String firstName, String lastName)
-			throws SQLException {
+	public boolean checkUserExist(int id) throws SQLException {
 
 		PreparedStatement preparedStatement = con
 				.prepareStatement("select count(*) from G2.Person where ID= "
@@ -126,19 +123,15 @@ public class DataBase {
 	public boolean chekLoginValidity(String username, String password)
 			throws SQLException {
 
-		String getData = "select * from g2.users";
+		String getData = "select count(*) from G2.Users where Username='"+username+"' and Password='"+password+"'";
 		PreparedStatement preparedStatement = con.prepareStatement(getData);
 		ResultSet resultSet = preparedStatement.executeQuery();
-
-		while (resultSet.next()) {
-			String user = resultSet.getString(2).toLowerCase();
-			String pass = resultSet.getString(3).toLowerCase();
-			if (user.equals(username.toLowerCase())
-					& pass.equals(password.toLowerCase())) {
-				return true;
-			}
+		resultSet.next();
+		int result = resultSet.getInt(1);
+		
+		if (result == 1) {
+			return true;
 		}
-
 		return false;
 
 	}
@@ -158,12 +151,10 @@ public class DataBase {
 		String insertTableSql = "insert into G2.Person "
 				+ "(ID, FirstName, LastName, Gender, Age, Category, City, Sport, IsEmployee, Salary)"
 				+ " values (?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement preparedStatement = con
-				.prepareStatement(insertTableSql);
+		PreparedStatement preparedStatement = con.prepareStatement(insertTableSql);
 
 		for (Person p : people) {
-			if (!this.checkUserExist(p.getId(), p.getFirstName(),
-				p.getLastName())) {
+			if (!this.checkUserExist(p.getId())) {
 				preparedStatement.setInt(1, p.getId());
 				preparedStatement.setString(2, p.getFirstName());
 				preparedStatement.setString(3, p.getLastName());
@@ -179,8 +170,7 @@ public class DataBase {
 				String updateDbQuery = "UPDATE G2.Person SET FirstName='"
 						+ p.getFirstName() + "', LastName='" + p.getLastName()
 						+ "' WHERE id=" + p.getId() + ";";
-				PreparedStatement preparedStatementUpdate = con
-						.prepareStatement(updateDbQuery);
+				PreparedStatement preparedStatementUpdate = con.prepareStatement(updateDbQuery);
 				preparedStatementUpdate.executeUpdate();
 			}
 

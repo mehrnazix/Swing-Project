@@ -32,7 +32,7 @@ public class AgePanel extends JPanel {
 		this.add(rd_more);
 	}
 	
-    public AgeCategory getSelectedButtonText() {
+    public AgeCategory getAge() {
         for (Enumeration<AbstractButton> buttons = gb.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
 

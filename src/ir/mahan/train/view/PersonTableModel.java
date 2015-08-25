@@ -36,21 +36,21 @@ public class PersonTableModel extends AbstractTableModel {
 		FormEvent formEvent = db.get(row);
 		switch (col) {
 		case 0:
-			return formEvent.id;
+			return formEvent.getId();
 		case 1:
-			return formEvent.firstName;
+			return formEvent.getFirstName();
 		case 2: 
-			return formEvent.lastName;
+			return formEvent.getLastName();
 		case 3:
-			return formEvent.empCategory;
+			return formEvent.getEmpCategory();
 		case 4: 
-			return formEvent.age;
+			return formEvent.getAge();
 		case 5:
-			return formEvent.gender;
+			return formEvent.getGender();
 		case 6:
-			return formEvent.city;
+			return formEvent.getCity();
 		case 7:
-			return formEvent.salary;
+			return formEvent.getSalary();
 	}
 		return null;
 	}

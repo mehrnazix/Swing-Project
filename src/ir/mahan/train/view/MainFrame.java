@@ -6,6 +6,8 @@ import ir.mahan.train.model.DataBase;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -75,15 +77,17 @@ public class MainFrame extends JFrame {
 		fileMenu.add(importMenuItem);
 		fileMenu.addSeparator();
 		fileMenu.add(exitMenuItem);
-
 		prefsItem = new JMenuItem("Preferences");
 		showMenu = new JMenu("SHOW");
-		showFormItem = new JMenuItem("Person Form");
+
 		showFormCheckBoxItem = new JCheckBoxMenuItem("Show the form");
+		showFormCheckBoxItem.isSelected();
 		showMenu.add(prefsItem);
-		showMenu.add(showFormItem);
+
+		showMenu.add(showFormCheckBoxItem);
 		showFormCheckBoxItem.setSelected(true);
 
+		
 		windowBar = new JMenu("Window");
 		windowBar.add(showMenu);
 

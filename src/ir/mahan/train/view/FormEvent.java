@@ -11,15 +11,27 @@ import java.io.Serializable;
 import javax.swing.JOptionPane;
 
 public class FormEvent {
-	
-	
+
 	public FormEvent() {
 		this.id = ++count;
 	}
 
-	public FormEvent(int id, String firstName, String lastName, EmpCategory empCategory,
-			AgeCategory age, Gender gender, String city,
-			FavouriteSport favouriteSport, boolean isEmployee, int salary) {
+	private int id;
+	private String firstName;
+	private String lastName;
+	private EmpCategory empCategory;
+	private AgeCategory age;
+	private Gender gender;
+	private String city;
+	private FavouriteSport favouriteSport;
+	private boolean isEmployee;
+	private int salary;
+	public static int count;
+
+	public FormEvent(int id, String firstName, String lastName,
+			EmpCategory empCategory, AgeCategory age, Gender gender,
+			String city, FavouriteSport favouriteSport, boolean isEmployee,
+			int salary) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -60,8 +72,8 @@ public class FormEvent {
 	public int getId() {
 		return id;
 	}
-	
-	public boolean getIsEmployee(){
+
+	public boolean getIsEmployee() {
 		return isEmployee;
 	}
 
@@ -93,7 +105,6 @@ public class FormEvent {
 		return favouriteSport;
 	}
 
-
 	public void setFavouriteSport(FavouriteSport favouriteSport) {
 		this.favouriteSport = favouriteSport;
 	}
@@ -114,29 +125,12 @@ public class FormEvent {
 		this.salary = salary;
 	}
 
-	public int id;
-	public String firstName;
-	public String lastName;
-	public EmpCategory empCategory;
-	public AgeCategory age;
-	public Gender gender;
-	public String city;
-	public FavouriteSport favouriteSport;
-	public boolean isEmployee;
-	public int salary;
-	public static int count;
-	
-    
-	
-
 	public String ToString(String Seperator) {
 
-		return id + Seperator + firstName + Seperator + lastName + Seperator + empCategory + Seperator
-				+ age + Seperator + gender + Seperator + city + Seperator
-				+ favouriteSport + Seperator + salary;
+		return id + Seperator + firstName + Seperator + lastName + Seperator
+				+ empCategory + Seperator + age + Seperator + gender
+				+ Seperator + city + Seperator + favouriteSport + Seperator
+				+ salary;
 	}
-
-
-	
 
 }

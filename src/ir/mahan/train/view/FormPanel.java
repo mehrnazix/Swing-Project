@@ -84,11 +84,10 @@ public class FormPanel extends JPanel {
 		salaryTxt.setEnabled(false);
 		setLayout(new GridBagLayout());
 		layoutComponent();
-		
-		
+
 		CheckboxItemListener checkboxItemListener = new CheckboxItemListener();
 		isEmployeeChB.addItemListener(checkboxItemListener);
-		
+
 		BtnActionListener btnActionListener = new BtnActionListener();
 		submitBtn.addActionListener(btnActionListener);
 	}
@@ -208,70 +207,52 @@ public class FormPanel extends JPanel {
 		add(submitBtn, gc);
 	}
 
-	// @Override
-	// public void actionPerformed(ActionEvent event) {
-	// JButton btn = (JButton) event.getSource();
-	//
-	// if (btn == submitBtn) {
-	// if (istringListener != null) {
-	// User user = new User();
-	// user.FirstName = firstNameTxt.getText();
-	// user.LastName = lastNameTxt.getText();
-	// user.Age = agePanel.getSelectedButtonText();
-	// user.Gender = genderCB.getSelectedItem().toString();
-	// user.Role = roleCB.getSelectedItem().toString();
-	// user.City = userCity.getSelectedButtonText();
-	// user.favouriteSport =
-	// userFavouriteSportList.getSelectedValue().toString();
-	// user.isEmployee = isEmployeeChB.isSelected();
-	// // user.salary = Integer.parseInt(salaryTxt.getText());
-	//
-	//
-	// istringListener.stringEmitted(user);
-	// }
-	// }
-	// // JCheckBox chb = (JCheckBox) event.getSource();
-	// // if (chb == isEmployeeChB) {
-	// // salaryTxt.setEnabled(isEmployeeChB.isSelected());
-	// // }
-	//
-	// }
 	private class BtnActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			JButton btn = (JButton) event.getSource();
-			
-			
+
 			if (btn == submitBtn) {
-				
-				
+
 				if (istringListener != null) {
+
+					String firstName = firstNameTxt.getText();
+					String lastName = lastNameTxt.getText();
+					AgeCategory age = agePanel.getAge();
+					Gender gender = (Gender) genderCB.getSelectedItem();
+					EmpCategory empCategory = (EmpCategory) roleCB
+							.getSelectedItem();
+					String city = userCity.getCity();
+					FavouriteSport favouriteSport = (FavouriteSport) userFavouriteSportList
+							.getSelectedValue();
+					boolean isEmployee = isEmployeeChB.isSelected();
+
 					FormEvent formEvent = new FormEvent();
-					formEvent.firstName = firstNameTxt.getText();
-					formEvent.lastName = lastNameTxt.getText();
-					formEvent.age = agePanel.getSelectedButtonText();
-					formEvent.gender = (Gender) genderCB.getSelectedItem();
-					formEvent.empCategory = (EmpCategory) roleCB.getSelectedItem();
-					formEvent.city = userCity.getSelectedButtonText();
-					formEvent.favouriteSport = (FavouriteSport) userFavouriteSportList.getSelectedValue();
-					formEvent.isEmployee = isEmployeeChB.isSelected();
-					
+					formEvent.setFirstName(firstName);
+					formEvent.setLastName(lastName);
+					formEvent.setAge(age);
+					formEvent.setGender(gender);
+					formEvent.setCity(city);
+					formEvent.setEmpCategory(empCategory);
+					formEvent.setEmployee(isEmployee);
+					formEvent.setFavouriteSport(favouriteSport);
+
 					try {
-						formEvent.salary = Integer.parseInt(salaryTxt.getText());
+						int salary = Integer.parseInt(salaryTxt.getText());
+						formEvent.setSalary(salary);
 						salaryTxt.setText("");
 					} catch (Exception e) {
-						
+						formEvent.setSalary(0);
 					}
-	
-					
+
 					istringListener.formEventEmitted(formEvent);
 				}
 			}
 		}
 
 	}
-	
+
 	private class CheckboxItemListener implements ItemListener {
 
 		@Override
@@ -282,6 +263,6 @@ public class FormPanel extends JPanel {
 				salaryTxt.setEnabled(false);
 			}
 		}
-		
+
 	}
 }
