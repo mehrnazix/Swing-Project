@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import ir.mahan.train.controller.Controller;
 
@@ -53,32 +55,32 @@ public class LoginPanel extends JPanel {
 		emptyPasswordStar.setVisible(false);
 		emptyUsernameStar.setVisible(false);
 		userNametf.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				passwordFd.requestFocusInWindow();
-				
+
 			}
 		});
-		
+
 		passwordFd = new JPasswordField();
 		loginBtn = new JButton("Login");
 		passwordFd.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				loginBtn.requestFocusInWindow();
-				
+
 			}
 		});
-		
+
 		connectionLabel = new JLabel();
 	}
 
 	public void setLblText(String text) {
 		connectionLabel.setText(text);
 	}
-	
+
 	public void setiLoginListener(ILoginListener iLoginListener) {
 		this.iLoginListener = iLoginListener;
 	}
@@ -96,12 +98,12 @@ public class LoginPanel extends JPanel {
 		gc.gridy = 0;
 		gc.gridx = 1;
 		this.add(emptyUsernameStar, gc);
-		
+
 		gc.weightx = 2;
 		gc.gridy = 1;
 		gc.gridx = 1;
 		this.add(emptyPasswordStar, gc);
-		
+
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.gridy = 0;
 		gc.gridx = 0;
@@ -127,26 +129,25 @@ public class LoginPanel extends JPanel {
 		this.add(loginBtn, gc);
 		loginBtn.addActionListener(new LoginBtnClick());
 		loginBtn.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
 
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode()==KeyEvent.VK_ENTER)
-				{
-					 loginBtn.doClick();
-					
-				}	
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					loginBtn.doClick();
+
+				}
 			}
-		} );
+		});
 
 		gc.gridy = 3;
 		gc.gridx = 2;
@@ -156,7 +157,28 @@ public class LoginPanel extends JPanel {
 
 	}
 
-	private class LoginBtnClick implements ActionListener  {
+	public String convertPass(String passToHash) {
+		String convertedpass = null;
+		MessageDigest messageDigest;
+		try {
+			messageDigest = MessageDigest.getInstance("MD5");
+			messageDigest.update(passToHash.getBytes());
+			byte[] bytes = messageDigest.digest();
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < bytes.length; i++) {
+				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16)
+						.substring(1));
+			}
+			convertedpass = sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return convertedpass;
+	}
+
+	private class LoginBtnClick implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
@@ -170,29 +192,42 @@ public class LoginPanel extends JPanel {
 					for (int i = 0; i < passwordarr.length; i++) {
 						password += passwordarr[i];
 					}
-					if(username.isEmpty() & password.isEmpty()){
-						userNametf.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+
+					LoginPanel loginPanel = new LoginPanel();
+					String hashedPassword = loginPanel.convertPass(password);
+
+					if (username.isEmpty() & password.isEmpty()) {
+						userNametf.setBorder(BorderFactory.createMatteBorder(2,
+								2, 2, 2, Color.red));
 						emptyUsernameStar.setVisible(true);
-						passwordFd.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+						passwordFd.setBorder(BorderFactory.createMatteBorder(2,
+								2, 2, 2, Color.red));
 						emptyPasswordStar.setVisible(true);
-						JOptionPane.showMessageDialog(null,"Please Enter UserName And Password", "Error", JOptionPane.ERROR_MESSAGE);
-					}
-					else if (username.isEmpty()) {
-						userNametf.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+						JOptionPane.showMessageDialog(null,
+								"Please Enter UserName And Password", "Error",
+								JOptionPane.ERROR_MESSAGE);
+					} else if (username.isEmpty()) {
+						userNametf.setBorder(BorderFactory.createMatteBorder(2,
+								2, 2, 2, Color.red));
 						emptyUsernameStar.setVisible(true);
-						JOptionPane.showMessageDialog(null,"Usename Can Not be empty!", "Error", JOptionPane.ERROR_MESSAGE);
-						passwordFd.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+						JOptionPane.showMessageDialog(null,
+								"Usename Can Not be empty!", "Error",
+								JOptionPane.ERROR_MESSAGE);
+						passwordFd.setBorder(BorderFactory.createMatteBorder(1,
+								1, 1, 1, Color.BLACK));
 						emptyPasswordStar.setVisible(false);
-					}
-					else if (password.isEmpty()) {
-						passwordFd.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+					} else if (password.isEmpty()) {
+						passwordFd.setBorder(BorderFactory.createMatteBorder(2,
+								2, 2, 2, Color.red));
 						emptyPasswordStar.setVisible(true);
-						JOptionPane.showMessageDialog(null,"Password can not be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null,
+								"Password can not be empty!", "Error",
+								JOptionPane.ERROR_MESSAGE);
 						userNametf.setBorder(BorderFactory.createMatteBorder(1,
 								1, 1, 1, Color.BLACK));
 						emptyUsernameStar.setVisible(false);
 					} else {
-					iLoginListener.userInfoEmit(username, password);
+						iLoginListener.userInfoEmit(username, hashedPassword);
 					}
 				}
 			}
